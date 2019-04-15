@@ -32,7 +32,7 @@
         android:layout_marginBottom="16dp"
         android:text="TextView"
         android:textColor="@android:color/black"
-        android:textSize="30sp"
+        android:textSize="60sp"
         app:layout_constraintBottom_toTopOf="@+id/record_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

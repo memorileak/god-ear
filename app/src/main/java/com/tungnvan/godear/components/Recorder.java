@@ -5,10 +5,28 @@ import android.os.Environment;
 
 import com.tungnvan.godear.utils.FileUtils;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Recorder {
 
     private MediaRecorder recorder;
     private boolean recording = false;
+    private HashMap<String, Runnable> observers = new HashMap<>();
+
+    public void subscribe(String key, Runnable runnable) {
+        observers.put(key, runnable);
+    }
+
+    public void unsubscribe(String key) {
+        observers.remove(key);
+    }
+
+    public void broadcast() {
+        for (Map.Entry<String, Runnable> entry: observers.entrySet()) {
+            entry.getValue().run();
+        }
+    }
 
     public void setupRecorder() {
         try {
@@ -30,6 +48,7 @@ public class Recorder {
             recorder.prepare();
             recorder.start();
             recording = true;
+            broadcast();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -41,6 +60,7 @@ public class Recorder {
             recorder.reset();
             recorder.release();
             recording = false;
+            broadcast();
         } catch (Exception e) {
             e.printStackTrace();
         }
