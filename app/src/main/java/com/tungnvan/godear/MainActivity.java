@@ -18,9 +18,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String PROBE_SERVICE = "PROBE_SERVICE";
 
     private boolean is_recording = false;
-
     private PermissionController permission_controller;
-
     private Button record_button;
     private TextView record_timer;
 
@@ -33,20 +31,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         record_button = (Button) findViewById(R.id.record_button);
         record_timer = (TextView) findViewById(R.id.record_timer);
-
         record_timer.setText(String.format("%03d", 0));
-
         permission_controller = new PermissionController(this);
-
         if (!permission_controller.isGrantedAllPermissions()) {
             permission_controller.grantPermission();
         }
-
         probeRunningService();
-
         LocalBroadcastManager.getInstance(this).registerReceiver(new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -54,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
                 changeRecordButtonUI(is_recording);
             }
         }, new IntentFilter(RecordService.BROADCAST_RECORDER));
-
         LocalBroadcastManager.getInstance(this).registerReceiver(new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {

@@ -34,7 +34,6 @@ public class Recorder {
             recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
             recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
             recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-
             String dir_path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/GodEar/";
             FileUtils.createDirectory(dir_path);
             recorder.setOutputFile(dir_path + FileUtils.generateRandomFileName("GodEar_") + ".amr");
