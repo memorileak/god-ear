@@ -13,6 +13,7 @@ import android.support.v4.content.LocalBroadcastManager;
 
 import com.tungnvan.godear.components.RecordTimer;
 import com.tungnvan.godear.components.Recorder;
+import com.tungnvan.godear.utils.TimeUtils;
 
 public class RecordService extends IntentService {
 
@@ -79,7 +80,7 @@ public class RecordService extends IntentService {
             public void run() {
                 broadcastClock();
                 if (recorder.isRecording()) {
-                    notifyNotification(buildForegroundNotification(String.format("%03d", clock.getElapsedTime())));
+                    notifyNotification(buildForegroundNotification(TimeUtils.toHMSString(clock.getElapsedTime())));
                 }
             }
         });
@@ -91,7 +92,7 @@ public class RecordService extends IntentService {
             }
         }, new IntentFilter(MainActivity.PROBE_SERVICE));
         clock.resetTimer();
-        startForegroundWithNotification(buildForegroundNotification(String.format("%03d", clock.getElapsedTime())));
+        startForegroundWithNotification(buildForegroundNotification(TimeUtils.toHMSString(clock.getElapsedTime())));
         super.onCreate();
     }
 
