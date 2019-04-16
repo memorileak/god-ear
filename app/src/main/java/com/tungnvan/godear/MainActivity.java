@@ -10,8 +10,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.tungnvan.godear.components.PermissionController;
+import com.tungnvan.godear.utils.TimeUtils;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         record_button = (Button) findViewById(R.id.record_button);
         record_timer = (TextView) findViewById(R.id.record_timer);
-        record_timer.setText(String.format("%03d", 0));
+        record_timer.setText(TimeUtils.toHMSString(0));
         permission_controller = new PermissionController(this);
         if (!permission_controller.isGrantedAllPermissions()) {
             permission_controller.grantPermission();
@@ -49,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         LocalBroadcastManager.getInstance(this).registerReceiver(new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                record_timer.setText(String.format("%03d", intent.getIntExtra(RecordService.ELAPSED_TIME, 0)));
+                record_timer.setText(TimeUtils.toHMSString(intent.getIntExtra(RecordService.ELAPSED_TIME, 0)));
             }
         }, new IntentFilter(RecordService.BROADCAST_CLOCK));
     }
@@ -70,12 +72,11 @@ public class MainActivity extends AppCompatActivity {
         Intent record_service_intent = new Intent(this, RecordService.class);
         if (is_recording) {
             stopService(record_service_intent);
+            Toast.makeText(this, "Record file has successfully saved!", Toast.LENGTH_SHORT).show();
+        } else if (permission_controller.isGrantedAllPermissions()) {
+            startService(record_service_intent);
         } else {
-            if (permission_controller.isGrantedAllPermissions()) {
-                startService(record_service_intent);
-            } else {
-                permission_controller.grantPermission();
-            }
+            permission_controller.grantPermission();
         }
     };
 
