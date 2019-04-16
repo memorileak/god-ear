@@ -3,6 +3,7 @@ package com.tungnvan.godear;
 import android.app.IntentService;
 import android.app.Notification;
 import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -23,9 +24,10 @@ public class RecordService extends IntentService {
     public static final String IS_RECORDING = "IS_RECORDING";
     public static final String ELAPSED_TIME = "ELAPSED_TIME";
 
-    private String CHANNEL_ID = "1001";
+    private String CHANNEL_ID = "9001";
     private int NOTIFICATION_ID = 9009;
-
+    private NotificationCompat.Builder notification_builder;
+    private PendingIntent pending_main_activity_intent;
     private Recorder recorder;
     private RecordTimer clock;
 
@@ -34,15 +36,19 @@ public class RecordService extends IntentService {
     }
 
     private Notification buildForegroundNotification(String content) {
-        Intent mainActivityIntent = new Intent(this, MainActivity.class);
-        PendingIntent pendingMainActivityIntent = PendingIntent.getActivity(this, 0, mainActivityIntent, 0);
-        return new NotificationCompat.Builder(this, CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
-            .setContentTitle("God Ear is listening")
-            .setContentText(content)
-            .setPriority(Notification.PRIORITY_DEFAULT)
-            .setContentIntent(pendingMainActivityIntent)
-            .build();
+        pending_main_activity_intent = pending_main_activity_intent == null
+            ? TaskStackBuilder.create(this)
+                .addNextIntentWithParentStack(new Intent(this, MainActivity.class))
+                .getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)
+            : pending_main_activity_intent;
+        notification_builder = notification_builder == null
+            ? new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setContentTitle("God Ear is listening")
+                .setPriority(Notification.PRIORITY_DEFAULT)
+                .setContentIntent(pending_main_activity_intent)
+            : notification_builder;
+        return notification_builder.setContentText(content).build();
     }
 
     private void notifyNotification(Notification notification) {

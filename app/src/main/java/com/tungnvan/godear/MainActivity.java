@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.tungnvan.godear.components.PermissionController;
 import com.tungnvan.godear.utils.TimeUtils;
@@ -71,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
         Intent record_service_intent = new Intent(this, RecordService.class);
         if (is_recording) {
             stopService(record_service_intent);
+            Toast.makeText(this, "Record file has successfully saved!", Toast.LENGTH_SHORT).show();
         } else if (permission_controller.isGrantedAllPermissions()) {
             startService(record_service_intent);
         } else {
