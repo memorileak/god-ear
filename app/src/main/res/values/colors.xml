@@ -3,7 +3,10 @@
     <color name="colorPrimary">#D81B60</color>
     <color name="colorPrimaryDark">#A31449</color>
     <color name="colorAccent">#008577</color>
+    <color name="gray">#808080</color>
     <color name="light_gray">#EEE</color>
     <color name="almost_black">#313131</color>
     <color name="white">#FFF</color>
+    <color name="pink_light">#f4a4c1</color>
+    <color name="text_normal">#202124</color>
 </resources>
