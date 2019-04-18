@@ -43,7 +43,7 @@ public class RecordService extends IntentService {
             : pending_main_activity_intent;
         notification_builder = notification_builder == null
             ? new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setSmallIcon(R.drawable.ic_god_ear)
                 .setContentTitle("God Ear is listening")
                 .setPriority(Notification.PRIORITY_DEFAULT)
                 .setContentIntent(pending_main_activity_intent)

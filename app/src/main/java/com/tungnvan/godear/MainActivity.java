@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private PermissionController permission_controller;
     private Button record_button;
     private TextView record_timer;
+    private Toolbar main_toolbar;
 
     private void probeRunningService() {
         Intent probe_intent = new Intent(MainActivity.PROBE_SERVICE);
@@ -33,9 +35,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        main_toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         record_button = (Button) findViewById(R.id.record_button);
         record_timer = (TextView) findViewById(R.id.record_timer);
         record_timer.setText(TimeUtils.toHMSString(0));
+        setSupportActionBar(main_toolbar);
         permission_controller = new PermissionController(this);
         if (!permission_controller.isGrantedAllPermissions()) {
             permission_controller.grantPermission();
@@ -58,13 +62,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void changeRecordButtonUI(boolean is_recording) {
         if (is_recording) {
-            record_button.setText(R.string.record_button_stop);
-            record_button.setTextColor(getResources().getColor(R.color.almost_black));
-            record_button.setBackgroundColor(getResources().getColor(R.color.light_gray));
+            record_button.setBackground(getResources().getDrawable(R.drawable.stop_button_shape));
         } else {
-            record_button.setText(R.string.record_button_start);
-            record_button.setTextColor(getResources().getColor(R.color.white));
-            record_button.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+            record_button.setBackground(getResources().getDrawable(R.drawable.record_button_shape));
         }
     }
 

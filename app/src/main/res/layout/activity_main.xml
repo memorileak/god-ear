@@ -4,23 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:elevation="1dp"
     tools:context=".MainActivity">
 
     <Button
         android:id="@+id/record_button"
-        style="@android:style/Widget.DeviceDefault.Button.Borderless.Colored"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="285dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="32dp"
-        android:background="@color/colorPrimary"
+        android:background="@drawable/record_button_shape"
+        android:clickable="true"
+        android:longClickable="true"
         android:onClick="handleRecordClick"
-        android:text="Record"
-        android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/record_timer" />
 
     <TextView
         android:id="@+id/record_timer"
@@ -31,11 +34,25 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:text="TextView"
-        android:textColor="@android:color/black"
+        android:textColor="@color/text_normal"
         android:textSize="60sp"
         app:layout_constraintBottom_toTopOf="@+id/record_button"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/main_toolbar" />
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/main_toolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:elevation="1dp"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:titleTextColor="@color/colorPrimary" />
 
 </android.support.constraint.ConstraintLayout>
