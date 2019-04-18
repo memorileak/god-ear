@@ -2,4 +2,6 @@
     <string name="app_name">God Ear</string>
     <string name="record_button_start">Record</string>
     <string name="record_button_stop">Stop</string>
+    <string name="menu_item_list">List Records</string>
+    <string name="menu_item_settings">Settings</string>
 </resources>
