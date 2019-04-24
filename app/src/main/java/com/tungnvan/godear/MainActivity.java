@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tungnvan.godear.components.PermissionController;
+import com.tungnvan.godear.components.RecordRenamer;
 import com.tungnvan.godear.utils.TimeUtils;
 
 public class MainActivity extends AppCompatActivity {
@@ -104,7 +105,9 @@ public class MainActivity extends AppCompatActivity {
             stopService(record_service_intent);
             Toast.makeText(this, "Record file has successfully saved!", Toast.LENGTH_SHORT).show();
         } else if (permission_controller.isGrantedAllPermissions()) {
-            startService(record_service_intent);
+//            startService(record_service_intent);
+                RecordRenamer record_renamer = new RecordRenamer(this);
+                record_renamer.showDialog();
         } else {
             permission_controller.grantPermission();
         }
