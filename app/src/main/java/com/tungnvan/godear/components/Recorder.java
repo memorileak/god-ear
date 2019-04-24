@@ -3,6 +3,7 @@ package com.tungnvan.godear.components;
 import android.media.MediaRecorder;
 import android.os.Environment;
 
+import com.tungnvan.godear.constants.GlobalConstants;
 import com.tungnvan.godear.utils.FileUtils;
 
 import java.util.HashMap;
@@ -34,9 +35,8 @@ public class Recorder {
             recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
             recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
             recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-            String dir_path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/GodEar/";
-            FileUtils.createDirectory(dir_path);
-            recorder.setOutputFile(dir_path + FileUtils.generateRandomFileName("GodEar_") + ".amr");
+            FileUtils.createDirectory(GlobalConstants.RECORD_DIRECTORY);
+            recorder.setOutputFile(GlobalConstants.RECORD_DIRECTORY + FileUtils.generateRandomFileName("GodEar_") + ".amr");
         } catch (Exception e) {
             e.printStackTrace();
         }
