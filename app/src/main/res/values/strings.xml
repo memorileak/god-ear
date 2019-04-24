@@ -6,4 +6,5 @@
     <string name="menu_item_settings">Settings</string>
     <string name="rename_record_dialog_title">Rename record</string>
     <string name="rename_record_dialog_positive_button">Save</string>
+    <string name="rename_record_dialog_negative_button">Discard</string>
 </resources>

@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String PROBE_SERVICE = "PROBE_SERVICE";
 
     private boolean is_recording = false;
+    private String file_path;
     private PermissionController permission_controller;
     private Button record_button;
     private TextView record_timer;
@@ -52,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onReceive(Context context, Intent intent) {
                 is_recording = intent.getBooleanExtra(RecordService.IS_RECORDING, false);
+                file_path = intent.getStringExtra(RecordService.FILE_PATH);
                 changeRecordButtonUI(is_recording);
             }
         }, new IntentFilter(RecordService.BROADCAST_RECORDER));
@@ -103,11 +105,10 @@ public class MainActivity extends AppCompatActivity {
         Intent record_service_intent = new Intent(this, RecordService.class);
         if (is_recording) {
             stopService(record_service_intent);
-            Toast.makeText(this, "Record file has successfully saved!", Toast.LENGTH_SHORT).show();
+            RecordRenamer record_renamer = new RecordRenamer(this, file_path);
+            record_renamer.showDialog();
         } else if (permission_controller.isGrantedAllPermissions()) {
-//            startService(record_service_intent);
-                RecordRenamer record_renamer = new RecordRenamer(this);
-                record_renamer.showDialog();
+            startService(record_service_intent);
         } else {
             permission_controller.grantPermission();
         }

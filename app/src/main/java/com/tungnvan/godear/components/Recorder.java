@@ -1,10 +1,10 @@
 package com.tungnvan.godear.components;
 
 import android.media.MediaRecorder;
-import android.os.Environment;
 
 import com.tungnvan.godear.constants.GlobalConstants;
 import com.tungnvan.godear.utils.FileUtils;
+import com.tungnvan.godear.utils.RecordNameUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,6 +14,7 @@ public class Recorder {
     private MediaRecorder recorder;
     private boolean recording = false;
     private HashMap<String, Runnable> observers = new HashMap<>();
+    private String file_path;
 
     public void subscribe(String key, Runnable runnable) {
         observers.put(key, runnable);
@@ -36,7 +37,8 @@ public class Recorder {
             recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
             recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
             FileUtils.createDirectory(GlobalConstants.RECORD_DIRECTORY);
-            recorder.setOutputFile(GlobalConstants.RECORD_DIRECTORY + FileUtils.generateRandomFileName("GodEar_") + ".amr");
+            file_path = RecordNameUtils.produceFilePathFromName(FileUtils.generateRandomFileName("GodEar_"));
+            recorder.setOutputFile(file_path);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -67,6 +69,10 @@ public class Recorder {
 
     public boolean isRecording() {
         return recording;
+    }
+
+    public String getFilePath() {
+        return file_path;
     }
 
 }

@@ -22,6 +22,7 @@ public class RecordService extends IntentService {
     public static final String BROADCAST_RECORDER = "BROADCAST_RECORDER";
     public static final String BROADCAST_CLOCK = "BROADCAST_CLOCK";
     public static final String IS_RECORDING = "IS_RECORDING";
+    public static final String FILE_PATH = "FILE_PATH";
     public static final String ELAPSED_TIME = "ELAPSED_TIME";
 
     private String CHANNEL_ID = "9001";
@@ -62,6 +63,7 @@ public class RecordService extends IntentService {
     private void broadcastRecorder() {
         Intent broadcast_intent = new Intent(RecordService.BROADCAST_RECORDER);
         broadcast_intent.putExtra(RecordService.IS_RECORDING, recorder.isRecording());
+        broadcast_intent.putExtra(RecordService.FILE_PATH, recorder.getFilePath());
         LocalBroadcastManager.getInstance(this).sendBroadcast(broadcast_intent);
     }
 
