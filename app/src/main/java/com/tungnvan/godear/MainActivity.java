@@ -105,8 +105,7 @@ public class MainActivity extends AppCompatActivity {
         Intent record_service_intent = new Intent(this, RecordService.class);
         if (is_recording) {
             stopService(record_service_intent);
-            RecordRenamer record_renamer = new RecordRenamer(this, file_path);
-            record_renamer.showDialog();
+            (new RecordRenamer(this, file_path)).showDialog();
         } else if (permission_controller.isGrantedAllPermissions()) {
             startService(record_service_intent);
         } else {
