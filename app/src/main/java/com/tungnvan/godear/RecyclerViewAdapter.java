@@ -1,6 +1,7 @@
 package com.tungnvan.godear;
 
 import android.content.Context;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -56,11 +57,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     public class RecyclerViewHolder extends RecyclerView.ViewHolder {
         TextView recordName;
-        LinearLayout line;
+        ConstraintLayout line;
         public RecyclerViewHolder(View itemView) {
             super(itemView);
             recordName = (TextView) itemView.findViewById(R.id.record_name);
-            line = (LinearLayout) itemView.findViewById(R.id.line);
+            line = (ConstraintLayout) itemView.findViewById(R.id.line);
         }
     }
 

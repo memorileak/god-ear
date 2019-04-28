@@ -1,11 +1,14 @@
 package com.tungnvan.godear;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.ListView;
+import android.view.View;
+import android.widget.Button;
+import android.widget.SeekBar;
 import android.widget.Toast;
 
 import java.io.File;
@@ -17,12 +20,17 @@ public class ListActivity extends AppCompatActivity {
     RecyclerView recordView;
     RecyclerViewAdapter recordAdapter;
     List<String> data;
+    private Button play_button;
+    private SeekBar record_seek;
 
     @Override
     public void onCreate(Bundle savedInstanceState)    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
         recordView = (RecyclerView) findViewById(R.id.recordList);
+        play_button = (Button) findViewById(R.id.play_button);
+        record_seek = (SeekBar) findViewById(R.id.record_seek);
+
         data = new ArrayList<>();
 
         //lấy danh sách bản ghi từ thư mục lưu trữ
@@ -49,6 +57,13 @@ public class ListActivity extends AppCompatActivity {
             }
         });
     }
+
+
+
+    public void playButtonClicked(View view) {
+
+    }
+
 
 
 }
