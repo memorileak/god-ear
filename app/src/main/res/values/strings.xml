@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">God Ear</string>
+    <string name="record_button_start">Record</string>
+    <string name="record_button_stop">Stop</string>
+    <string name="record_list">Record List</string>
+    <string name="listText">Record List</string>
+</resources>
