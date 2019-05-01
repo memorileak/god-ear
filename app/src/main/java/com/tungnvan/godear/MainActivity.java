@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startListRecordsActivity() {
-        Toast.makeText(this, "This feature is in development!", Toast.LENGTH_SHORT).show();
+        startActivity (new Intent(this, ListActivity.class));
     }
 
     private void startSettingsActivity() {
