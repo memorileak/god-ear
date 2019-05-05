@@ -1,5 +1,7 @@
 package com.tungnvan.godear.utils;
 
+import java.util.concurrent.TimeUnit;
+
 public class TimeUtils {
 
     public static String toHMSString(int total_seconds) {
@@ -7,6 +9,13 @@ public class TimeUtils {
         int minutes = (total_seconds % 36000) / 60;
         int seconds = total_seconds % 60;
         return String.format("%02d:%02d:%02d", hours, minutes, seconds);
+    }
+
+    // Chuyển số lượng milli giây thành một String có ý nghĩa.
+    public static String millisecondsToString(int milliseconds)  {
+        long minutes = TimeUnit.MILLISECONDS.toMinutes((long) milliseconds);
+        long seconds =  TimeUnit.MILLISECONDS.toSeconds((long) milliseconds) ;
+        return minutes+":"+ seconds;
     }
 
 }
