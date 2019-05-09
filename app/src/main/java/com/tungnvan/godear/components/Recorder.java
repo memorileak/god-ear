@@ -37,7 +37,7 @@ public class Recorder {
             recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
             recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
             FileUtils.createDirectory(GlobalConstants.RECORD_DIRECTORY);
-            file_path = RecordNameUtils.produceFilePathFromName(FileUtils.generateRandomFileName("GodEar_"));
+            file_path = RecordNameUtils.produceFilePathFromName(FileUtils.generateFileNameByTime("Sound at "));
             recorder.setOutputFile(file_path);
         } catch (Exception e) {
             e.printStackTrace();
