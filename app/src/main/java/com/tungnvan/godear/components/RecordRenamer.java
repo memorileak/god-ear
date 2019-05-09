@@ -25,7 +25,10 @@ public class RecordRenamer {
     private boolean renameRecord() {
         try {
             String new_file_path = RecordNameUtils.produceFilePathFromName(record_name_input.getText().toString());
-            if (FileUtils.renameFile(old_file_path, new_file_path)) {
+            if (
+                old_file_path.compareTo(new_file_path) == 0
+                || FileUtils.renameFile(old_file_path, new_file_path)
+            ) {
                 Toast.makeText(own_context, "Record file has successfully saved!", Toast.LENGTH_SHORT).show();
                 return true;
             } else {
