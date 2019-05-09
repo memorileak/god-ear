@@ -63,8 +63,8 @@ public class RecordService extends IntentService {
     private void startForegroundWithNotification(Notification notification) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             // Create your own notification channel if android version is 8.0 and up
-            NotificationChannel notification_channel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, NOTIFICATION_CHANNEL_NAME, NotificationManager.IMPORTANCE_NONE);
-            NotificationManager notification_manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            NotificationChannel notification_channel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, NOTIFICATION_CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationManager notification_manager = (NotificationManager) getSystemService(NotificationManager.class);
             notification_manager.createNotificationChannel(notification_channel);
         }
         startForeground(NOTIFICATION_ID, notification);
