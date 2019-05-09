@@ -17,14 +17,13 @@ import android.widget.Toast;
 
 import com.tungnvan.godear.components.PermissionController;
 import com.tungnvan.godear.components.RecordRenamer;
+import com.tungnvan.godear.components.RecorderStateHolder;
 import com.tungnvan.godear.utils.TimeUtils;
 
 public class MainActivity extends AppCompatActivity {
 
     public static final String PROBE_SERVICE = "PROBE_SERVICE";
 
-    private boolean is_recording = false;
-    private String file_path;
     private PermissionController permission_controller;
     private Button record_button;
     private TextView record_timer;
@@ -52,9 +51,9 @@ public class MainActivity extends AppCompatActivity {
         LocalBroadcastManager.getInstance(this).registerReceiver(new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                is_recording = intent.getBooleanExtra(RecordService.IS_RECORDING, false);
-                file_path = intent.getStringExtra(RecordService.FILE_PATH);
-                changeRecordButtonUI(is_recording);
+                RecorderStateHolder.setRecordingState(intent.getBooleanExtra(RecordService.IS_RECORDING, false));
+                RecorderStateHolder.setRecordFilePath(intent.getStringExtra(RecordService.FILE_PATH));
+                changeRecordButtonUI(RecorderStateHolder.getRecordingState());
             }
         }, new IntentFilter(RecordService.BROADCAST_RECORDER));
         LocalBroadcastManager.getInstance(this).registerReceiver(new BroadcastReceiver() {
@@ -103,9 +102,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void handleRecordClick(View view) {
         Intent record_service_intent = new Intent(this, RecordService.class);
-        if (is_recording) {
+        if (RecorderStateHolder.getRecordingState()) {
             stopService(record_service_intent);
-            (new RecordRenamer(this, file_path)).showDialog();
+            (new RecordRenamer(this, RecorderStateHolder.getRecordFilePath())).showDialog();
         } else if (permission_controller.isGrantedAllPermissions()) {
             startService(record_service_intent);
         } else {
