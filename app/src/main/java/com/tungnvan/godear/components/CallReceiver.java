@@ -8,6 +8,7 @@ import android.support.v4.content.LocalBroadcastManager;
 
 import com.tungnvan.godear.RecordService;
 import com.tungnvan.godear.commons.PhonecallReceiver;
+import com.tungnvan.godear.constants.GlobalConstants;
 import com.tungnvan.godear.utils.FileUtils;
 import com.tungnvan.godear.utils.RecordNameUtils;
 
@@ -42,9 +43,13 @@ public class CallReceiver extends PhonecallReceiver {
         Intent record_service_intent = new Intent(ctx, RecordService.class);
         try {
             ctx.stopService(record_service_intent);
+            String old_file_path = RecorderStateHolder.getRecordFilePath();
             FileUtils.renameFile(
-                RecorderStateHolder.getRecordFilePath(),
-                RecordNameUtils.produceFilePathFromName(FileUtils.generateFileNameByTime("Called by " + number + " at "))
+                old_file_path,
+                old_file_path.replace(
+                    GlobalConstants.SOUND_RECORD_PREFIX, 
+                    GlobalConstants.CALL_RECORD_PREFIX + number + " "
+                )
             );
             LocalBroadcastManager.getInstance(ctx).unregisterReceiver(broadcast_receiver);
         } catch (Exception e) {

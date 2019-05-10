@@ -46,7 +46,7 @@ public class Recorder {
             recorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
             recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
             FileUtils.createDirectory(GlobalConstants.RECORD_DIRECTORY);
-            file_path = RecordNameUtils.produceFilePathFromName(FileUtils.generateFileNameByTime("Sound at "));
+            file_path = RecordNameUtils.produceFilePathFromName(FileUtils.generateFileNameByTime(GlobalConstants.SOUND_RECORD_PREFIX));
             recorder.setOutputFile(file_path);
         } catch (Exception e) {
             e.printStackTrace();
