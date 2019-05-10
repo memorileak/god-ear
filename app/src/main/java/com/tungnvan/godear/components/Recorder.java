@@ -43,7 +43,7 @@ public class Recorder {
         try {
             recorder = new MediaRecorder();
             recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-            recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+            recorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
             recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
             FileUtils.createDirectory(GlobalConstants.RECORD_DIRECTORY);
             file_path = RecordNameUtils.produceFilePathFromName(FileUtils.generateFileNameByTime("Sound at "));

@@ -54,26 +54,37 @@ public class CallReceiver extends PhonecallReceiver {
 
     @Override
     protected void onIncomingCallStarted(Context ctx, String number, Date start) {
-        startRecording(ctx, number);
+        if ((new SettingsManager(ctx)).getAutoHearIncomingCall()) {
+            startRecording(ctx, number);
+        }
     }
 
     @Override
     protected void onIncomingCallEnded(Context ctx, String number, Date start, Date end) {
-        stopRecording(ctx, number);
+        if ((new SettingsManager(ctx)).getAutoHearIncomingCall()) {
+            stopRecording(ctx, number);
+        }
     }
 
     @Override
     protected void onOutgoingCallStarted(Context ctx, String number, Date start) {
-        startRecording(ctx, number);
+        if ((new SettingsManager(ctx)).getAutoHearOutgoingCall()) {
+            startRecording(ctx, number);
+        }
     }
 
     @Override
     protected void onOutgoingCallEnded(Context ctx, String number, Date start, Date end) {
-        stopRecording(ctx, number);
+        if ((new SettingsManager(ctx)).getAutoHearOutgoingCall()) {
+            stopRecording(ctx, number);
+        }
     }
 
     @Override
     protected void onMissedCall(Context ctx, String number, Date start) {
-        stopRecording(ctx, number);
+        SettingsManager settings_manager = new SettingsManager(ctx);
+        if (settings_manager.getAutoHearIncomingCall() || settings_manager.getAutoHearOutgoingCall()) {
+            stopRecording(ctx, number);
+        }
     }
 }

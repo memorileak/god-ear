@@ -13,8 +13,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.tungnvan.godear.activities.settings.SettingsActivity;
 import com.tungnvan.godear.components.PermissionController;
 import com.tungnvan.godear.components.RecordRenamer;
 import com.tungnvan.godear.components.RecorderStateHolder;
@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startSettingsActivity() {
-        Toast.makeText(this, "This feature is in development!", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(this, SettingsActivity.class));
     }
 
     public void handleRecordClick(View view) {
