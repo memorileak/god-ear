@@ -10,7 +10,6 @@ import com.tungnvan.godear.RecordService;
 import com.tungnvan.godear.commons.PhonecallReceiver;
 import com.tungnvan.godear.constants.GlobalConstants;
 import com.tungnvan.godear.utils.FileUtils;
-import com.tungnvan.godear.utils.RecordNameUtils;
 
 import java.util.Date;
 
@@ -47,7 +46,7 @@ public class CallReceiver extends PhonecallReceiver {
             FileUtils.renameFile(
                 old_file_path,
                 old_file_path.replace(
-                    GlobalConstants.SOUND_RECORD_PREFIX, 
+                    GlobalConstants.SOUND_RECORD_PREFIX,
                     GlobalConstants.CALL_RECORD_PREFIX + number + " "
                 )
             );
