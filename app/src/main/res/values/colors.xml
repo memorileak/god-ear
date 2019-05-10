@@ -9,4 +9,5 @@
     <color name="white">#FFF</color>
     <color name="pink_light">#f4a4c1</color>
     <color name="text_normal">#202124</color>
+    <color name="text_settings_option">#545454</color>
 </resources>
