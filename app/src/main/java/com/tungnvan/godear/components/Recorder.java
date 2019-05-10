@@ -11,10 +11,25 @@ import java.util.Map;
 
 public class Recorder {
 
+    private static Recorder instance = null;
+
     private MediaRecorder recorder;
     private boolean recording = false;
     private HashMap<String, Runnable> observers = new HashMap<>();
     private String file_path;
+
+    public static Recorder getInstance() {
+        if (instance == null) instance = new Recorder();
+        return instance;
+    }
+
+    private Recorder() {}
+
+    private void broadcast() {
+        for (Map.Entry<String, Runnable> entry: observers.entrySet()) {
+            entry.getValue().run();
+        }
+    }
 
     public void subscribe(String key, Runnable runnable) {
         observers.put(key, runnable);
@@ -22,12 +37,6 @@ public class Recorder {
 
     public void unsubscribe(String key) {
         observers.remove(key);
-    }
-
-    public void broadcast() {
-        for (Map.Entry<String, Runnable> entry: observers.entrySet()) {
-            entry.getValue().run();
-        }
     }
 
     public void setupRecorder() {

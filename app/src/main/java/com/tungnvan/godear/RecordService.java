@@ -85,8 +85,8 @@ public class RecordService extends IntentService {
 
     @Override
     public void onCreate() {
-        recorder = new Recorder();
-        clock = new RecordTimer();
+        recorder = Recorder.getInstance();
+        clock = RecordTimer.getInstance();
         recorder.subscribe(RecordService.CLASS_NAME, new Runnable() {
             @Override
             public void run() {
