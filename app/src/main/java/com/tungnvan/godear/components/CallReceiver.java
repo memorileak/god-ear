@@ -8,8 +8,8 @@ import android.support.v4.content.LocalBroadcastManager;
 
 import com.tungnvan.godear.RecordService;
 import com.tungnvan.godear.commons.PhonecallReceiver;
+import com.tungnvan.godear.constants.GlobalConstants;
 import com.tungnvan.godear.utils.FileUtils;
-import com.tungnvan.godear.utils.RecordNameUtils;
 
 import java.util.Date;
 
@@ -42,9 +42,13 @@ public class CallReceiver extends PhonecallReceiver {
         Intent record_service_intent = new Intent(ctx, RecordService.class);
         try {
             ctx.stopService(record_service_intent);
+            String old_file_path = RecorderStateHolder.getRecordFilePath();
             FileUtils.renameFile(
-                RecorderStateHolder.getRecordFilePath(),
-                RecordNameUtils.produceFilePathFromName(FileUtils.generateFileNameByTime("Called by " + number + " at "))
+                old_file_path,
+                old_file_path.replace(
+                    GlobalConstants.SOUND_RECORD_PREFIX,
+                    GlobalConstants.CALL_RECORD_PREFIX + number + " "
+                )
             );
             LocalBroadcastManager.getInstance(ctx).unregisterReceiver(broadcast_receiver);
         } catch (Exception e) {
@@ -54,26 +58,37 @@ public class CallReceiver extends PhonecallReceiver {
 
     @Override
     protected void onIncomingCallStarted(Context ctx, String number, Date start) {
-        startRecording(ctx, number);
+        if ((new SettingsManager(ctx)).getAutoHearIncomingCall()) {
+            startRecording(ctx, number);
+        }
     }
 
     @Override
     protected void onIncomingCallEnded(Context ctx, String number, Date start, Date end) {
-        stopRecording(ctx, number);
+        if ((new SettingsManager(ctx)).getAutoHearIncomingCall()) {
+            stopRecording(ctx, number);
+        }
     }
 
     @Override
     protected void onOutgoingCallStarted(Context ctx, String number, Date start) {
-        startRecording(ctx, number);
+        if ((new SettingsManager(ctx)).getAutoHearOutgoingCall()) {
+            startRecording(ctx, number);
+        }
     }
 
     @Override
     protected void onOutgoingCallEnded(Context ctx, String number, Date start, Date end) {
-        stopRecording(ctx, number);
+        if ((new SettingsManager(ctx)).getAutoHearOutgoingCall()) {
+            stopRecording(ctx, number);
+        }
     }
 
     @Override
     protected void onMissedCall(Context ctx, String number, Date start) {
-        stopRecording(ctx, number);
+        SettingsManager settings_manager = new SettingsManager(ctx);
+        if (settings_manager.getAutoHearIncomingCall() || settings_manager.getAutoHearOutgoingCall()) {
+            stopRecording(ctx, number);
+        }
     }
 }
