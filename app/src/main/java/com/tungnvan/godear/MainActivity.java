@@ -51,9 +51,9 @@ public class MainActivity extends AppCompatActivity {
         LocalBroadcastManager.getInstance(this).registerReceiver(new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                RecorderStateHolder.setRecordingState(intent.getBooleanExtra(RecordService.IS_RECORDING, false));
-                RecorderStateHolder.setRecordFilePath(intent.getStringExtra(RecordService.FILE_PATH));
-                changeRecordButtonUI(RecorderStateHolder.getRecordingState());
+                RecorderStateHolder.getInstance().setRecordingState(intent.getBooleanExtra(RecordService.IS_RECORDING, false));
+                RecorderStateHolder.getInstance().setRecordFilePath(intent.getStringExtra(RecordService.FILE_PATH));
+                changeRecordButtonUI(RecorderStateHolder.getInstance().getRecordingState());
             }
         }, new IntentFilter(RecordService.BROADCAST_RECORDER));
         LocalBroadcastManager.getInstance(this).registerReceiver(new BroadcastReceiver() {
@@ -102,9 +102,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void handleRecordClick(View view) {
         Intent record_service_intent = new Intent(this, RecordService.class);
-        if (RecorderStateHolder.getRecordingState()) {
+        if (RecorderStateHolder.getInstance().getRecordingState()) {
             stopService(record_service_intent);
-            (new RecordRenamer(this, RecorderStateHolder.getRecordFilePath())).showDialog();
+            (new RecordRenamer(this, RecorderStateHolder.getInstance().getRecordFilePath())).showDialog();
         } else if (permission_controller.isGrantedAllPermissions()) {
             startService(record_service_intent);
         } else {
