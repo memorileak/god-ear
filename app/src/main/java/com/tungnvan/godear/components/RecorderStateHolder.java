@@ -2,22 +2,31 @@ package com.tungnvan.godear.components;
 
 public class RecorderStateHolder {
 
-    private static boolean is_recording = false;
-    private static String file_path = null;
+    private static RecorderStateHolder instance = null;
 
-    public static void setRecordingState(boolean is_recording_state) {
+    private boolean is_recording = false;
+    private String file_path = null;
+
+    public static RecorderStateHolder getInstance() {
+        if (instance == null) instance = new RecorderStateHolder();
+        return instance;
+    }
+
+    private RecorderStateHolder() {}
+
+    public void setRecordingState(boolean is_recording_state) {
         is_recording = is_recording_state;
     }
 
-    public static void setRecordFilePath(String record_file_path) {
+    public void setRecordFilePath(String record_file_path) {
         file_path = record_file_path;
     }
 
-    public static boolean getRecordingState() {
+    public boolean getRecordingState() {
         return is_recording;
     }
 
-    public static String getRecordFilePath() {
+    public String getRecordFilePath() {
         return file_path;
     }
 

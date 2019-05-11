@@ -11,8 +11,16 @@ public class FileUtils {
         return (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.forLanguageTag("vi-VN"))).format(new Date());
     }
 
+    public static String generateFileNameByTime(Date time) {
+        return (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.forLanguageTag("vi-VN"))).format(time);
+    }
+
     public static String generateFileNameByTime(String prefix) {
         return prefix + generateFileNameByTime();
+    }
+
+    public static String generateFileNameByTime(Date time, String prefix) {
+        return prefix + generateFileNameByTime(time);
     }
 
     public static void createDirectory(String dir_path) {
