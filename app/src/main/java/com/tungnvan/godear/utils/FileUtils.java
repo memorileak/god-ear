@@ -1,17 +1,26 @@
 package com.tungnvan.godear.utils;
 
-import org.apache.commons.lang3.RandomStringUtils;
-
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class FileUtils {
 
-    public static String generateRandomFileName(String prefix) {
-        return prefix + RandomStringUtils.randomAlphabetic(16);
+    public static String generateFileNameByTime() {
+        return (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.forLanguageTag("vi-VN"))).format(new Date());
     }
 
-    public static String generateRandomFileName() {
-        return RandomStringUtils.randomAlphabetic(16);
+    public static String generateFileNameByTime(Date time) {
+        return (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.forLanguageTag("vi-VN"))).format(time);
+    }
+
+    public static String generateFileNameByTime(String prefix) {
+        return prefix + generateFileNameByTime();
+    }
+
+    public static String generateFileNameByTime(Date time, String prefix) {
+        return prefix + generateFileNameByTime(time);
     }
 
     public static void createDirectory(String dir_path) {

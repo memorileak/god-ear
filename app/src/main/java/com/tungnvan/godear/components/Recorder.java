@@ -11,10 +11,25 @@ import java.util.Map;
 
 public class Recorder {
 
+    private static Recorder instance = null;
+
     private MediaRecorder recorder;
     private boolean recording = false;
     private HashMap<String, Runnable> observers = new HashMap<>();
     private String file_path;
+
+    public static Recorder getInstance() {
+        if (instance == null) instance = new Recorder();
+        return instance;
+    }
+
+    private Recorder() {}
+
+    private void broadcast() {
+        for (Map.Entry<String, Runnable> entry: observers.entrySet()) {
+            entry.getValue().run();
+        }
+    }
 
     public void subscribe(String key, Runnable runnable) {
         observers.put(key, runnable);
@@ -24,20 +39,14 @@ public class Recorder {
         observers.remove(key);
     }
 
-    public void broadcast() {
-        for (Map.Entry<String, Runnable> entry: observers.entrySet()) {
-            entry.getValue().run();
-        }
-    }
-
     public void setupRecorder() {
         try {
             recorder = new MediaRecorder();
             recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-            recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+            recorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
             recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
             FileUtils.createDirectory(GlobalConstants.RECORD_DIRECTORY);
-            file_path = RecordNameUtils.produceFilePathFromName(FileUtils.generateRandomFileName("GodEar_"));
+            file_path = RecordNameUtils.produceFilePathFromName(FileUtils.generateFileNameByTime(GlobalConstants.SOUND_RECORD_PREFIX));
             recorder.setOutputFile(file_path);
         } catch (Exception e) {
             e.printStackTrace();

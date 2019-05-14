@@ -10,7 +10,9 @@ public class PermissionController {
     private final String[] PERMISSIONS = new String[] {
         Manifest.permission.RECORD_AUDIO,
         Manifest.permission.READ_EXTERNAL_STORAGE,
-        Manifest.permission.WRITE_EXTERNAL_STORAGE
+        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+        Manifest.permission.READ_PHONE_STATE,
+        Manifest.permission.PROCESS_OUTGOING_CALLS
     };
 
     private Activity activity;

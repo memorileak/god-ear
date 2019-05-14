@@ -2,12 +2,15 @@ package com.tungnvan.godear;
 
 import android.app.IntentService;
 import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.LocalBroadcastManager;
@@ -25,7 +28,8 @@ public class RecordService extends IntentService {
     public static final String FILE_PATH = "FILE_PATH";
     public static final String ELAPSED_TIME = "ELAPSED_TIME";
 
-    private String CHANNEL_ID = "9001";
+    private String NOTIFICATION_CHANNEL_ID = "com.tungnvan.godear";
+    private String NOTIFICATION_CHANNEL_NAME = "Record Service";
     private int NOTIFICATION_ID = 9009;
     private NotificationCompat.Builder notification_builder;
     private PendingIntent pending_main_activity_intent;
@@ -43,7 +47,7 @@ public class RecordService extends IntentService {
                 .getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)
             : pending_main_activity_intent;
         notification_builder = notification_builder == null
-            ? new NotificationCompat.Builder(this, CHANNEL_ID)
+            ? new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_god_ear)
                 .setContentTitle("God Ear is listening")
                 .setPriority(Notification.PRIORITY_DEFAULT)
@@ -57,6 +61,14 @@ public class RecordService extends IntentService {
     }
 
     private void startForegroundWithNotification(Notification notification) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            // Create your own notification channel if android version is 8.0 and up
+            NotificationChannel notification_channel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, NOTIFICATION_CHANNEL_NAME, NotificationManager.IMPORTANCE_LOW);
+            notification_channel.enableLights(false);
+            notification_channel.enableVibration(false);
+            NotificationManager notification_manager = (NotificationManager) getSystemService(NotificationManager.class);
+            notification_manager.createNotificationChannel(notification_channel);
+        }
         startForeground(NOTIFICATION_ID, notification);
     }
 
@@ -75,8 +87,8 @@ public class RecordService extends IntentService {
 
     @Override
     public void onCreate() {
-        recorder = new Recorder();
-        clock = new RecordTimer();
+        recorder = Recorder.getInstance();
+        clock = RecordTimer.getInstance();
         recorder.subscribe(RecordService.CLASS_NAME, new Runnable() {
             @Override
             public void run() {

@@ -9,6 +9,8 @@ import java.util.TimerTask;
 
 public class RecordTimer extends Activity {
 
+    private static RecordTimer instance = null;
+
     private int elapsed_time = 0;
     private Timer elapsed_counter;
     private HashMap<String, Runnable> observers = new HashMap<>();
@@ -19,6 +21,13 @@ public class RecordTimer extends Activity {
             tickTimer();
         }
     }
+
+    public static RecordTimer getInstance() {
+        if (instance == null) instance = new RecordTimer();
+        return instance;
+    }
+
+    private RecordTimer() {}
 
     private void tickTimer() {
         ++elapsed_time;
