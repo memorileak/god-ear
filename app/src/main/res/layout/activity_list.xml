@@ -35,4 +35,26 @@ tools:context=".ListActivity">
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@+id/recordText" />
 
+    <Button
+        android:id="@+id/multi_delete_button"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="70dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="23dp"
+        android:background="@drawable/delete_button_border"
+        android:clickable="true"
+        android:elevation="0dp"
+        android:onClick="multiDeleteButtonClicked"
+        android:text="@string/multi_delete_button"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/recordList"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/recordText"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
 </android.support.constraint.ConstraintLayout>

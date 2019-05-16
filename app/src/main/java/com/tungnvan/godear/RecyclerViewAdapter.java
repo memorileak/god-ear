@@ -1,29 +1,32 @@
 package com.tungnvan.godear;
 
 import android.content.Context;
-import android.support.constraint.ConstraintLayout;
-import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.Button;
 import android.widget.TextView;
+
+import com.tungnvan.godear.utils.Record;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.RecyclerViewHolder>{
+
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.RecyclerViewHolder> {
 
     private Context mContext;
-    private List<String> data = new ArrayList<>();
+    private List<Record> data = new ArrayList<>();
+    private int lastSelectedPosition = -1;
 
-    public RecyclerViewAdapter(Context mContext, List<String> data) {
+    public RecyclerViewAdapter(Context mContext, List<Record> data) {
         this.mContext = mContext;
         this.data = data;
     }
 
-    public RecyclerViewAdapter(List<String> data) {
+    public RecyclerViewAdapter(List<Record> data) {
         this.data = data;
     }
 
@@ -35,38 +38,72 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     @Override
-    public void onBindViewHolder(final RecyclerViewHolder holder, int position) {
-        holder.recordName.setText(data.get(position));
-
-        // bắt sự kiện khi kích vào LinearLayout
-        holder.line.setOnClickListener(new View.OnClickListener() {
+    public void onBindViewHolder(final RecyclerViewHolder holder, final int position) {
+        holder.itemview.setTag(position);
+        holder.recordname.setText(data.get(position).getRecord_name());
+        holder.recordduration.setText(data.get(position).getRecord_max_time());
+        holder.record.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                holder.line.setBackgroundColor(ContextCompat.getColor(mContext, R.color.colorAccent));
-                if (onItemClickedListener != null) {
-                    onItemClickedListener.onItemClick(holder.recordName.getText().toString());
-                }
+//                  if(lastSelectedPosition > 0){
+//                      //data.get(lastSelectedPosition).setIs_selected(false);
+//                  }
+//                  Intent intent = new Intent(this, PlayRecordView.class);
+//                  intent.putExtra("position_id", position);
+//                  startActivity (intent);
             }
         });
     }
+
 
     @Override
     public int getItemCount() {
         return data.size();
     }
 
+
     public class RecyclerViewHolder extends RecyclerView.ViewHolder {
-        TextView recordName;
-        ConstraintLayout line;
+
+        private View itemview;
+        public TextView recordname;
+        public TextView recordduration;
+        public CardView record;
+        public Button playbutton;
+
+
         public RecyclerViewHolder(View itemView) {
             super(itemView);
-            recordName = (TextView) itemView.findViewById(R.id.record_name);
-            line = (ConstraintLayout) itemView.findViewById(R.id.line);
+            itemview = itemView;
+            recordname = itemView.findViewById(R.id.record_name);
+            recordduration = itemView.findViewById(R.id.record_max_time);
+            record = itemView.findViewById(R.id.recordCard);
+            playbutton = itemView.findViewById(R.id.play_button);
+
+            //            mediaPlayer = new MediaPlayer();
+
+            //Xử lý khi nút play được bấm
+            playbutton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (onItemClickedListener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            onItemClickedListener.onPlayClick(position);
+                        }
+                    }
+
+                }
+            });
         }
+
+
     }
 
+
     public interface OnItemClickedListener {
-        void onItemClick(String username);
+        void onItemClick(int position);
+
+        void onPlayClick(int position);
     }
 
     private OnItemClickedListener onItemClickedListener;
@@ -75,4 +112,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         this.onItemClickedListener = onItemClickedListener;
     }
 }
+
+
+
+
+
 

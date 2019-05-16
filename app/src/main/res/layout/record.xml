@@ -10,33 +10,32 @@
     android:layout_marginRight="6dp"
     android:layout_marginBottom="5dp"
     card_view:cardCornerRadius="15dp"
-    card_view:cardElevation="2dp">
+    card_view:cardElevation="2dp"
+    android:clickable="true">
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/line"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/record_name"
-            android:layout_width="304dp"
-            android:layout_height="80dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="5dp"
+            android:layout_width="237dp"
+            android:layout_height="53dp"
+            android:layout_marginTop="32dp"
             android:textColor="@color/text_normal"
-            android:textSize="15sp"
+            android:textSize="16sp"
             card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintEnd_toEndOf="parent"
-            card_view:layout_constraintStart_toEndOf="@+id/play_button"
-            card_view:layout_constraintTop_toTopOf="parent"
-            card_view:layout_constraintVertical_bias="0.0" />
+            card_view:layout_constraintStart_toEndOf="@+id/record_max_time"
+            card_view:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/play_button"
             style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_marginStart="35dp"
             android:layout_marginTop="50dp"
             android:layout_marginEnd="16dp"
@@ -44,43 +43,27 @@
             android:background="@drawable/play_button_shape"
             android:clickable="true"
             android:elevation="0dp"
-            android:onClick="playButtonClicked"
             card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintEnd_toStartOf="@+id/record_name"
+            card_view:layout_constraintHorizontal_bias="0.0"
             card_view:layout_constraintStart_toStartOf="parent"
             card_view:layout_constraintTop_toTopOf="parent"
-            card_view:layout_constraintVertical_bias="0.34" />
+            card_view:layout_constraintVertical_bias="0.49" />
 
-        <SeekBar
-            android:id="@+id/record_seek"
-            android:layout_width="227dp"
-            android:layout_height="19dp"
-            android:layout_marginStart="64dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            card_view:layout_constraintBottom_toBottomOf="parent"
-            card_view:layout_constraintEnd_toEndOf="parent"
-            card_view:layout_constraintHorizontal_bias="0.0"
-            card_view:layout_constraintStart_toStartOf="@+id/play_button"
-            card_view:layout_constraintTop_toTopOf="parent"
-            card_view:layout_constraintVertical_bias="0.826" />
 
         <TextView
-            android:id="@+id/record_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:id="@+id/record_max_time"
+            android:layout_width="38dp"
+            android:layout_height="33dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:text="00:00"
             card_view:layout_constraintBottom_toBottomOf="parent"
-            card_view:layout_constraintEnd_toEndOf="@+id/record_name"
-            card_view:layout_constraintHorizontal_bias="0.625"
-            card_view:layout_constraintStart_toEndOf="@+id/record_seek"
+            card_view:layout_constraintEnd_toStartOf="@+id/record_name"
+            card_view:layout_constraintStart_toEndOf="@+id/play_button"
             card_view:layout_constraintTop_toTopOf="parent"
-            card_view:layout_constraintVertical_bias="0.822" />
+            card_view:layout_constraintVertical_bias="0.764" />
 
 
     </android.support.constraint.ConstraintLayout>

@@ -13,6 +13,7 @@
     <string name="rename_record_dialog_negative_button">Discard</string>
 
     <string name="record_list">Record List</string>
+    <string name="record_title">Record Title</string>
     <string name="listText">Record List</string>
 
     <string name="settings_activity_title">Settings</string>
@@ -22,5 +23,8 @@
     <string name="auto_hear_outgoing_call_key">auto_hear_outgoing_call_preference</string>
     <string name="auto_hear_outgoing_call_option">Auto hear outgoing call</string>
     <string name="auto_hear_outgoing_call_summary">Auto record all your outgoing calls</string>
+    <string name="rename_button">Rename</string>
+    <string name="delete_button">Delete</string>
+    <string name="multi_delete_button">Delete</string>
 
 </resources>
