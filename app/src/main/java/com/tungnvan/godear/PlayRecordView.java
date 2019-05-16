@@ -1,7 +1,10 @@
 package com.tungnvan.godear;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Environment;
@@ -14,20 +17,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.content.Intent;
-import android.app.AlertDialog;
-import android.app.Dialog;
 
-import com.tungnvan.godear.components.RecordRenamer;
-import com.tungnvan.godear.components.RecorderStateHolder;
 import com.tungnvan.godear.utils.FileUtils;
-import com.tungnvan.godear.utils.Record;
 import com.tungnvan.godear.utils.RecordNameUtils;
 import com.tungnvan.godear.utils.TimeUtils;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class PlayRecordView extends AppCompatActivity implements View.OnClickListener {
     private int position;
@@ -39,9 +35,9 @@ public class PlayRecordView extends AppCompatActivity implements View.OnClickLis
     private TextView record_name;
     private SeekBar record_seek;
     private Button rename_button;
-    private  Button delete_button;
+    private Button delete_button;
     private String recordname;
-    private  String recordduration;
+    private String recordduration;
     private AlertDialog.Builder dialog_builder;
     private AlertDialog dialog;
 
@@ -51,7 +47,7 @@ public class PlayRecordView extends AppCompatActivity implements View.OnClickLis
     File record = new File(dir_path);
 
     @Override
-    public void onDestroy(){
+    public void onDestroy() {
         super.onDestroy();
         mediaPlayer.stop();
         finish();
@@ -78,8 +74,6 @@ public class PlayRecordView extends AppCompatActivity implements View.OnClickLis
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 
-                //mediaPlayer.seekTo(progress);
-
             }
 
             @Override
@@ -104,133 +98,95 @@ public class PlayRecordView extends AppCompatActivity implements View.OnClickLis
 
     }
 
-    public void playRecord(int position){
+    public void playRecord(int position) {
+        File dir_folder = new File(dir_path);
+        if (dir_folder.isDirectory()) {
+            File[] record_list = dir_folder.listFiles();
 
+            int positionCompare = 0;
 
-
-
-
-
-
-
-
-
-
-                File dir_folder = new File(dir_path);
-                if (dir_folder.isDirectory()) {
-                    File[] record_list = dir_folder.listFiles();
-                    int i = 0;
-
-                    for(File file: record_list){
-                        if(i != position){
-                            i++;
-                            continue;
-                        }
-                        else{
-                            record = file;
-                            break;
-                        }
-
-
-                    }
-
-                    recordname = record.getName();
-                    record_name.setText(recordname);
-                    try {
-                        this.mediaPlayer.setDataSource(dir_path + recordname);
-                        this.mediaPlayer.prepare();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                    int duration = this.mediaPlayer.getDuration();
-                    recordduration = TimeUtils.millisecondsToString(duration);
-
-                    int currentPosition = mediaPlayer.getCurrentPosition();
-                    if (currentPosition == 0) {
-                        record_seek.setMax(duration);
-                    } else if (currentPosition == duration) {
-
-                        mediaPlayer.reset();
-                        play_pause_button.setBackgroundResource(R.drawable.play_button_shape);
-
-                    }
-                    mediaPlayer.start();
-
-                    record_duration.setText(recordduration);
-
-
-
-                    // Tạo một thread để update trạng thái của SeekBar.
-                    UpdateSeekBarThread updateSeekBarThread = new UpdateSeekBarThread();
-                    threadHandler.postDelayed(updateSeekBarThread, 50);
-
-
-
+            for (File file : record_list) {
+                if (positionCompare != position) {
+                    positionCompare++;
+                    continue;
+                } else {
+                    record = file;
+                    break;
                 }
-                //final File file = new File(record_path);
-                //Uri uri = Uri.fromFile(file);
+            }
 
+            recordname = record.getName();
+            record_name.setText(recordname);
 
+            try {
+                this.mediaPlayer.setDataSource(dir_path + recordname);
+                this.mediaPlayer.prepare();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
+            int duration = this.mediaPlayer.getDuration();
+            recordduration = TimeUtils.millisecondsToString(duration);
+            int currentPosition = mediaPlayer.getCurrentPosition();
 
-
-
-
-
-    }//het ham play
-
-    public void playPauseButtonClicked(View view){
-        if(mediaPlayer.isPlaying()){
-            mediaPlayer.pause();
-            play_pause_button.setBackgroundResource(R.drawable.play_button_shape);
-
-        }
-
-        else {
-            play_pause_button.setBackgroundResource(R.drawable.pause_button_shape);
+            if (currentPosition == 0) {
+                record_seek.setMax(duration);
+            } else if (currentPosition == duration) {
+                mediaPlayer.reset();
+                play_pause_button.setBackgroundResource(R.drawable.play_button_shape);
+            }
 
             mediaPlayer.start();
-        }
+            record_duration.setText(recordduration);
 
+            UpdateSeekBarThread updateSeekBarThread = new UpdateSeekBarThread();
+            threadHandler.postDelayed(updateSeekBarThread, 50);
+        }
     }
 
-    public void forwardButtonClicked(View view){
+    public void playPauseButtonClicked(View view) {
+        if (mediaPlayer.isPlaying()) {
+            mediaPlayer.pause();
+            play_pause_button.setBackgroundResource(R.drawable.play_button_shape);
+        } else {
+            play_pause_button.setBackgroundResource(R.drawable.pause_button_shape);
+            mediaPlayer.start();
+        }
+    }
+
+    public void forwardButtonClicked(View view) {
         int currentPosition = this.mediaPlayer.getCurrentPosition();
         int duration = this.mediaPlayer.getDuration();
-
-        // 5 giây.
+//         5 giây.
         int ADD_TIME = 5000;
 
-        if(currentPosition + ADD_TIME < duration)  {
+        if (currentPosition + ADD_TIME < duration) {
             this.mediaPlayer.seekTo(currentPosition + ADD_TIME);
         }
     }
 
-    public void backwardButtonClicked(View view){
+    public void backwardButtonClicked(View view) {
         int currentPosition = this.mediaPlayer.getCurrentPosition();
-        int duration = this.mediaPlayer.getDuration();
-
-        // 5 giây.
+//        5 giây.
         int SUBTRACT_TIME = 5000;
 
-        if(currentPosition - SUBTRACT_TIME > 0 )  {
+        if (currentPosition - SUBTRACT_TIME > 0) {
             this.mediaPlayer.seekTo(currentPosition - SUBTRACT_TIME);
         }
     }
 
 
     private void showKeyboard() {
-        InputMethodManager imm = (InputMethodManager)this.getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
     }
 
     private void hideKeyboard() {
-        InputMethodManager imm = (InputMethodManager)this.getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
     }
 
-    public void renameButtonClicked(View view){
+    public void renameButtonClicked(View view) {
         View record_rename_form;
         final EditText record_name_input;
         dialog_builder = new AlertDialog.Builder(this);
@@ -245,19 +201,18 @@ public class PlayRecordView extends AppCompatActivity implements View.OnClickLis
                 .setNegativeButton(R.string.rename_record_dialog_negative_button, null)
                 .create();
         dialog.setCanceledOnTouchOutside(true);
-        if(dialog != null){
+        if (dialog != null) {
             dialog.show();
             showKeyboard();
             dialog.getButton(Dialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     try {
-                        if (FileUtils.renameFile(dir_path+recordname, dir_path + record_name_input.getText().toString())) {
+                        if (FileUtils.renameFile(dir_path + recordname, dir_path + record_name_input.getText().toString())) {
                             dialog.dismiss();
                             hideKeyboard();
                             recordname = record_name_input.getText().toString();
                             record_name.setText(recordname);
-
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -267,22 +222,18 @@ public class PlayRecordView extends AppCompatActivity implements View.OnClickLis
             dialog.getButton(Dialog.BUTTON_NEGATIVE).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                        dialog.dismiss();
-                        hideKeyboard();
+                    dialog.dismiss();
+                    hideKeyboard();
                 }
             });
         }
-
-
-
     }
 
-    public void deleteButtonClicked(View view){
+    public void deleteButtonClicked(View view) {
         AlertDialog.Builder delete_dialog = new AlertDialog.Builder(this);
         delete_dialog.setMessage("Do you want to delete this record?");
         delete_dialog.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-
                 try {
                     FileUtils.deleteFile(dir_path + recordname);
                     mediaPlayer.stop();
@@ -298,47 +249,41 @@ public class PlayRecordView extends AppCompatActivity implements View.OnClickLis
                 dialog.cancel();
             }
         });
-        AlertDialog al = delete_dialog.create();
 
-        al.show();
-
+        AlertDialog ad = delete_dialog.create();
+        ad.show();
     }
 
     @Override
     public void onClick(View v) {
-        if(v == play_pause_button){
+        if (v == play_pause_button) {
             playPauseButtonClicked(v);
         }
-        if(v == rename_button){
+        if (v == rename_button) {
             renameButtonClicked(v);
         }
-        if(v == delete_button){
+        if (v == delete_button) {
             deleteButtonClicked(v);
         }
-        if(v == forward_button){
+        if (v == forward_button) {
             forwardButtonClicked(v);
         }
-        if(v == backward_button){
+        if (v == backward_button) {
             backwardButtonClicked(v);
         }
     }
 
-
     // Thread sử dụng để Update trạng thái cho SeekBar.
     public class UpdateSeekBarThread implements Runnable {
 
-
         public void run() {
-
             int currentPosition = mediaPlayer.getCurrentPosition();
             String currentPositionStr = TimeUtils.millisecondsToString(currentPosition);
             record_time.setText(currentPositionStr);
             record_seek.setProgress(currentPosition);
-            //mediaPlayer.seekTo(record_seek.getProgress());
 
             // Ngừng thread 50 mili giây.
             threadHandler.postDelayed(this, 50);
         }
-
     }
 }
