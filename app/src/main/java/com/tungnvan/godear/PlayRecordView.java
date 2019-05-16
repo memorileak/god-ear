@@ -51,6 +51,13 @@ public class PlayRecordView extends AppCompatActivity implements View.OnClickLis
     File record = new File(dir_path);
 
     @Override
+    public void onDestroy(){
+        super.onDestroy();
+        mediaPlayer.stop();
+        finish();
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play_record);
@@ -278,6 +285,7 @@ public class PlayRecordView extends AppCompatActivity implements View.OnClickLis
 
                 try {
                     FileUtils.deleteFile(dir_path + recordname);
+                    mediaPlayer.stop();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -293,6 +301,7 @@ public class PlayRecordView extends AppCompatActivity implements View.OnClickLis
         AlertDialog al = delete_dialog.create();
 
         al.show();
+
     }
 
     @Override

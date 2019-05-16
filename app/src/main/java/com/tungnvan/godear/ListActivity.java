@@ -54,6 +54,7 @@ public class ListActivity extends AppCompatActivity {
     public void onResume()
     {
         super.onResume();
+        //mediaPlayer.stop();
         updateList();
     }
 
