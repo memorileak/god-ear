@@ -4,6 +4,7 @@ public class Record {
     private int ID;
     private String record_name;
     private String record_max_time;
+    private boolean is_selected = false;
 
     public Record(int ID, String record_name, String record_max_time){
         this.ID = ID;
@@ -33,5 +34,13 @@ public class Record {
 
     public void setRecord_max_time(String record_max_time) {
         this.record_max_time = record_max_time;
+    }
+
+    public boolean isIs_selected() {
+        return is_selected;
+    }
+
+    public void setIs_selected(boolean is_selected) {
+        this.is_selected = is_selected;
     }
 }

@@ -73,7 +73,9 @@ public class PlayRecordView extends AppCompatActivity implements View.OnClickLis
         record_seek.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
+                if(fromUser){
+                    mediaPlayer.seekTo(progress);
+                }
             }
 
             @Override

@@ -13,9 +13,11 @@ public class TimeUtils {
 
     // Chuyển số lượng milli giây thành một String có ý nghĩa.
     public static String millisecondsToString(int milliseconds)  {
-        long minutes = TimeUnit.MILLISECONDS.toMinutes((long) milliseconds);
-        long seconds =  TimeUnit.MILLISECONDS.toSeconds((long) milliseconds) ;
-        return minutes+":"+ seconds;
+        int total_seconds = milliseconds/1000;
+        //int hours = total_seconds / 3600;
+        int minutes = (total_seconds % 36000) / 60;
+        int seconds = total_seconds % 60;
+        return String.format("%02d:%02d", minutes, seconds);
     }
 
 }

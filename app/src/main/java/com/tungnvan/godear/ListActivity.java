@@ -7,6 +7,9 @@ import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,10 +23,11 @@ import java.util.List;
 
 
 
-public class ListActivity extends AppCompatActivity {
+public class ListActivity extends AppCompatActivity implements  View.OnClickListener{
     RecyclerView recordView;
     TextView recordText;
     RecyclerViewAdapter recordAdapter;
+    Button multi_delete_button;
     List<Record> data;
 
     private MediaPlayer mediaPlayer;
@@ -45,6 +49,8 @@ public class ListActivity extends AppCompatActivity {
     public void updateList(){
         recordView = findViewById(R.id.recordList);
         recordText = findViewById(R.id.recordText);
+        multi_delete_button = findViewById(R.id.multi_delete_button);
+        multi_delete_button.setEnabled(false);
 
         data = new ArrayList<>();
         int recordCount = 0;
@@ -82,8 +88,11 @@ public class ListActivity extends AppCompatActivity {
         recordView.setAdapter(recordAdapter);
         recordAdapter.setOnItemClickedListener(new RecyclerViewAdapter.OnItemClickedListener() {
             @Override
-            public void onItemClick(String username) {
-                Toast.makeText(ListActivity.this, username, Toast.LENGTH_SHORT).show();
+            public void onItemClick(int position) {
+                //Toast.makeText(ListActivity.this, username, Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(ListActivity.this, PlayRecordView.class);
+                intent.putExtra("position_id", position);
+                startActivity (intent);
             }
 
             @Override
@@ -93,6 +102,18 @@ public class ListActivity extends AppCompatActivity {
                 startActivity (intent);
             }
         });
+
     }//end UpdateList function
-    
+
+
+    @Override
+    public void onClick(View v) {
+        if(v == multi_delete_button) {
+            multiDeleteButtonClicked(v);
+        }
+    }
+
+    public void multiDeleteButtonClicked(View view){
+
+    }
 }

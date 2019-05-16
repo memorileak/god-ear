@@ -24,5 +24,6 @@
     <string name="auto_hear_outgoing_call_summary">Auto record all your outgoing calls</string>
     <string name="rename_button">Rename</string>
     <string name="delete_button">Delete</string>
+    <string name="multi_delete_button">Delete</string>
 
 </resources>

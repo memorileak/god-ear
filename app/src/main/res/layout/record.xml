@@ -10,7 +10,8 @@
     android:layout_marginRight="6dp"
     android:layout_marginBottom="5dp"
     card_view:cardCornerRadius="15dp"
-    card_view:cardElevation="2dp">
+    card_view:cardElevation="2dp"
+    android:clickable="true">
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/line"
@@ -41,6 +42,7 @@
             android:layout_marginBottom="50dp"
             android:background="@drawable/play_button_shape"
             android:clickable="true"
+            android:enabled="false"
             android:elevation="0dp"
             card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintEnd_toStartOf="@+id/record_name"

@@ -1,34 +1,25 @@
 package com.tungnvan.godear;
 
 import android.content.Context;
-import android.media.MediaPlayer;
-import android.os.Environment;
-import android.os.Handler;
-import android.support.constraint.ConstraintLayout;
-import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.tungnvan.godear.utils.Record;
-import com.tungnvan.godear.utils.TimeUtils;
-import com.tungnvan.godear.R.drawable;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.RecyclerViewHolder>{
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.RecyclerViewHolder> {
 
     private Context mContext;
     private List<Record> data = new ArrayList<>();
+    private int lastSelectedPosition = -1;
 
     public RecyclerViewAdapter(Context mContext, List<Record> data) {
         this.mContext = mContext;
@@ -47,15 +38,22 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     @Override
-    public void onBindViewHolder(final RecyclerViewHolder holder, int position) {
-          holder.itemview.setTag(position);
-          holder.recordname.setText(data.get(position).getRecord_name());
-          holder.recordduration.setText(data.get(position).getRecord_max_time());
-
-
-
+    public void onBindViewHolder(final RecyclerViewHolder holder, final int position) {
+        holder.itemview.setTag(position);
+        holder.recordname.setText(data.get(position).getRecord_name());
+        holder.recordduration.setText(data.get(position).getRecord_max_time());
+        holder.record.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                  if(lastSelectedPosition > 0){
+//                      //data.get(lastSelectedPosition).setIs_selected(false);
+//                  }
+//                  Intent intent = new Intent(this, PlayRecordView.class);
+//                  intent.putExtra("position_id", position);
+//                  startActivity (intent);
             }
-
+        });
+    }
 
 
     @Override
@@ -64,35 +62,30 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
 
-
-
     public class RecyclerViewHolder extends RecyclerView.ViewHolder {
 
-          private View itemview;
-          public TextView recordname;
-          public TextView recordduration;
-
-          public Button playbutton;
-
-
-
+        private View itemview;
+        public TextView recordname;
+        public TextView recordduration;
+        public CardView record;
+        public Button playbutton;
 
 
         public RecyclerViewHolder(View itemView) {
             super(itemView);
-              itemview = itemView;
+            itemview = itemView;
             recordname = itemView.findViewById(R.id.record_name);
             recordduration = itemView.findViewById(R.id.record_max_time);
- //             recordtime = itemView.findViewById(R.id.record_time);
-              playbutton = itemView.findViewById(R.id.play_button);
+            record = itemView.findViewById(R.id.recordCard);
+            playbutton = itemView.findViewById(R.id.play_button);
 
-  //            mediaPlayer = new MediaPlayer();
+            //            mediaPlayer = new MediaPlayer();
 
             //Xử lý khi nút play được bấm
             playbutton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(onItemClickedListener != null) {
+                    if (onItemClickedListener != null) {
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {
                             onItemClickedListener.onPlayClick(position);
@@ -107,13 +100,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
 
-
-
-
-
-
     public interface OnItemClickedListener {
-        void onItemClick(String username);
+        void onItemClick(int position);
+
         void onPlayClick(int position);
     }
 
