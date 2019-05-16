@@ -8,8 +8,6 @@ import android.support.v4.content.LocalBroadcastManager;
 
 import com.tungnvan.godear.RecordService;
 import com.tungnvan.godear.commons.PhonecallReceiver;
-import com.tungnvan.godear.utils.FileUtils;
-import com.tungnvan.godear.utils.RecordNameUtils;
 
 import java.util.Date;
 
@@ -17,8 +15,10 @@ public class CallReceiver extends PhonecallReceiver {
 
     private BroadcastReceiver broadcast_receiver = null;
 
-    private void startRecording(Context ctx, String number, Date start, boolean is_incoming_call) {
+    private void startRecording(Context ctx, String number, boolean is_incoming_call) {
         Intent record_service_intent = new Intent(ctx, RecordService.class);
+        record_service_intent.putExtra(RecordService.RECORD_TYPE, is_incoming_call ? RecordService.RECORD_TYPES[1] : RecordService.RECORD_TYPES[2]);
+        record_service_intent.putExtra(RecordService.CALL_NUMBER, number);
         broadcast_receiver = broadcast_receiver == null
             ? new BroadcastReceiver() {
                 @Override
@@ -28,9 +28,6 @@ public class CallReceiver extends PhonecallReceiver {
                 }
             }
             : broadcast_receiver;
-        CallStateHolder.getInstance().setIsIncomingCall(is_incoming_call);
-        CallStateHolder.getInstance().setNumber(number);
-        CallStateHolder.getInstance().setStartTime(start);
         try {
             ctx.stopService(record_service_intent);
             LocalBroadcastManager.getInstance(ctx).registerReceiver(broadcast_receiver, new IntentFilter(RecordService.BROADCAST_RECORDER));
@@ -43,15 +40,8 @@ public class CallReceiver extends PhonecallReceiver {
 
     private void stopRecording(Context ctx) {
         Intent record_service_intent = new Intent(ctx, RecordService.class);
-        String prefix = CallStateHolder.getInstance().getIsIncomingCall() ? "Incoming call " : "Outgoing call ";
-        String number = CallStateHolder.getInstance().getNumber();
-        Date start_time = CallStateHolder.getInstance().getStartTime();
         try {
             ctx.stopService(record_service_intent);
-            FileUtils.renameFile(
-                RecorderStateHolder.getInstance().getRecordFilePath(),
-                RecordNameUtils.produceFilePathFromName(FileUtils.generateFileNameByTime(start_time, prefix + number + " "))
-            );
             LocalBroadcastManager.getInstance(ctx).unregisterReceiver(broadcast_receiver);
         } catch (Exception e) {
             e.printStackTrace();
@@ -61,7 +51,7 @@ public class CallReceiver extends PhonecallReceiver {
     @Override
     protected void onIncomingCallStarted(Context ctx, String number, Date start) {
         if ((new SettingsManager(ctx)).getAutoHearIncomingCall()) {
-            startRecording(ctx, number, start, true);
+            startRecording(ctx, number, true);
         }
     }
 
@@ -75,7 +65,7 @@ public class CallReceiver extends PhonecallReceiver {
     @Override
     protected void onOutgoingCallStarted(Context ctx, String number, Date start) {
         if ((new SettingsManager(ctx)).getAutoHearOutgoingCall()) {
-            startRecording(ctx, number, start, false);
+            startRecording(ctx, number, false);
         }
     }
 

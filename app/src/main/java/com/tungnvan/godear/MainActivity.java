@@ -102,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void handleRecordClick(View view) {
         Intent record_service_intent = new Intent(this, RecordService.class);
+        record_service_intent.putExtra(RecordService.RECORD_TYPE, RecordService.RECORD_TYPES[0]);
         if (RecorderStateHolder.getInstance().getRecordingState()) {
             stopService(record_service_intent);
             (new RecordRenamer(this, RecorderStateHolder.getInstance().getRecordFilePath())).showDialog();

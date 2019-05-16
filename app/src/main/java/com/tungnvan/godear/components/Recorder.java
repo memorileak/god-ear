@@ -39,14 +39,14 @@ public class Recorder {
         observers.remove(key);
     }
 
-    public void setupRecorder() {
+    public void setupRecorder(String file_name) {
         try {
             recorder = new MediaRecorder();
             recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
             recorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
             recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
             FileUtils.createDirectory(GlobalConstants.RECORD_DIRECTORY);
-            file_path = RecordNameUtils.produceFilePathFromName(FileUtils.generateFileNameByTime(GlobalConstants.SOUND_RECORD_PREFIX));
+            file_path = RecordNameUtils.produceFilePathFromName(file_name);
             recorder.setOutputFile(file_path);
         } catch (Exception e) {
             e.printStackTrace();

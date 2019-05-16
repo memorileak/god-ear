@@ -8,11 +8,11 @@ import java.util.Locale;
 public class FileUtils {
 
     public static String generateFileNameByTime() {
-        return (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.forLanguageTag("vi-VN"))).format(new Date());
+        return (new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss", Locale.forLanguageTag("vi-VN"))).format(new Date());
     }
 
     public static String generateFileNameByTime(Date time) {
-        return (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.forLanguageTag("vi-VN"))).format(time);
+        return (new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss", Locale.forLanguageTag("vi-VN"))).format(time);
     }
 
     public static String generateFileNameByTime(String prefix) {

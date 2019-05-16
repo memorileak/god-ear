@@ -17,6 +17,8 @@ import android.support.v4.content.LocalBroadcastManager;
 
 import com.tungnvan.godear.components.RecordTimer;
 import com.tungnvan.godear.components.Recorder;
+import com.tungnvan.godear.constants.GlobalConstants;
+import com.tungnvan.godear.utils.FileUtils;
 import com.tungnvan.godear.utils.TimeUtils;
 
 public class RecordService extends IntentService {
@@ -27,6 +29,9 @@ public class RecordService extends IntentService {
     public static final String IS_RECORDING = "IS_RECORDING";
     public static final String FILE_PATH = "FILE_PATH";
     public static final String ELAPSED_TIME = "ELAPSED_TIME";
+    public static final String RECORD_TYPE = "RECORD_TYPE";
+    public static final String CALL_NUMBER = "CALL_NUMBER";
+    public static final String[] RECORD_TYPES = new String[] {"SOUND", "INCOMING_CALL", "OUTGOING_CALL"};
 
     private String NOTIFICATION_CHANNEL_ID = "com.tungnvan.godear";
     private String NOTIFICATION_CHANNEL_NAME = "Record Service";
@@ -119,7 +124,12 @@ public class RecordService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         try {
-            recorder.setupRecorder();
+            String file_name = (intent.getStringExtra(RecordService.RECORD_TYPE).compareTo(RecordService.RECORD_TYPES[0]) == 0)
+                ? FileUtils.generateFileNameByTime(GlobalConstants.SOUND_RECORD_PREFIX)
+                : (intent.getStringExtra(RecordService.RECORD_TYPE).compareTo(RecordService.RECORD_TYPES[1]) == 0)
+                    ? FileUtils.generateFileNameByTime(GlobalConstants.INCOMING_CALL_RECORD_PREFIX + intent.getStringExtra(RecordService.CALL_NUMBER) + "_")
+                    : FileUtils.generateFileNameByTime(GlobalConstants.OUTGOING_CALL_RECORD_PREFIX + intent.getStringExtra(RecordService.CALL_NUMBER) + "_");
+            recorder.setupRecorder(file_name);
             recorder.startRecorder();
             clock.startTimer();
             while (true) ;
