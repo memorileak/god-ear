@@ -48,9 +48,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(final RecyclerViewHolder holder, int position) {
+          holder.itemview.setTag(position);
           holder.recordname.setText(data.get(position).getRecord_name());
           holder.recordduration.setText(data.get(position).getRecord_max_time());
-          holder.recordseek.setEnabled(false);
+
 
 
             }
@@ -62,103 +63,47 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return data.size();
     }
 
-    public MediaPlayer mediaPlayer;
-    public Handler threadHandler = new Handler();
+
+
 
     public class RecyclerViewHolder extends RecyclerView.ViewHolder {
 
-        private View itemview;
-        public TextView recordname;
-        public TextView recordduration;
-        public TextView recordtime;
-        public Button playbutton;
-        public SeekBar recordseek;
+          private View itemview;
+          public TextView recordname;
+          public TextView recordduration;
+
+          public Button playbutton;
+
 
 
 
 
         public RecyclerViewHolder(View itemView) {
             super(itemView);
-            itemview = itemView;
+              itemview = itemView;
             recordname = itemView.findViewById(R.id.record_name);
             recordduration = itemView.findViewById(R.id.record_max_time);
-            recordtime = itemView.findViewById(R.id.record_time);
-            playbutton = itemView.findViewById(R.id.play_button);
-            recordseek = itemView.findViewById(R.id.record_seek);
-            mediaPlayer = new MediaPlayer();
+ //             recordtime = itemView.findViewById(R.id.record_time);
+              playbutton = itemView.findViewById(R.id.play_button);
 
-            //Xử lý khi nút Chi tiết được bấm
+  //            mediaPlayer = new MediaPlayer();
+
+            //Xử lý khi nút play được bấm
             playbutton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    recordseek.setEnabled(true);
-                    if(mediaPlayer.isPlaying()){
-                        mediaPlayer.pause();
-
-
-                    }
-
-                    else {
-
-                        if (mediaPlayer.getCurrentPosition() != 0) {
-                            mediaPlayer.start();
-                        } else {
-
-                            String dir_path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/GodEar/";
-                            String record_path = dir_path + recordname.getText().toString();
-                            //final File file = new File(record_path);
-                            //Uri uri = Uri.fromFile(file);
-                            mediaPlayer = new MediaPlayer();
-                            try {
-                                mediaPlayer.setDataSource(record_path);
-                                mediaPlayer.prepare();
-
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-
-
-                            // Khoảng thời gian của bài hát (Tính theo mili giây).
-                            int duration = mediaPlayer.getDuration();
-
-                            int currentPosition = mediaPlayer.getCurrentPosition();
-                            if (currentPosition == 0) {
-                                recordseek.setMax(duration);
-                            } else if (currentPosition == duration) {
-
-                                mediaPlayer.reset();
-                            }
-                            mediaPlayer.start();
-
-                            // Tạo một thread để update trạng thái của SeekBar.
-                            UpdateSeekBarThread updateSeekBarThread = new UpdateSeekBarThread();
-                            threadHandler.postDelayed(updateSeekBarThread, 50);
+                    if(onItemClickedListener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            onItemClickedListener.onPlayClick(position);
                         }
                     }
+
                 }
             });
         }
 
-        // Thread sử dụng để Update trạng thái cho SeekBar.
-        public class UpdateSeekBarThread implements Runnable {
 
-
-            public void run() {
-                if (mediaPlayer.isPlaying()) {
-                    playbutton.setBackgroundResource(R.drawable.pause_button_shape);
-                } else {
-                    playbutton.setBackgroundResource(R.drawable.play_button_shape);
-                }
-                    int currentPosition = mediaPlayer.getCurrentPosition();
-                    String currentPositionStr = TimeUtils.millisecondsToString(currentPosition);
-                    recordtime.setText(currentPositionStr + " - ");
-                    recordseek.setProgress(currentPosition);
-
-                    // Ngừng thread 50 mili giây.
-                    threadHandler.postDelayed(this, 50);
-                }
-
-        }
     }
 
 
@@ -169,6 +114,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     public interface OnItemClickedListener {
         void onItemClick(String username);
+        void onPlayClick(int position);
     }
 
     private OnItemClickedListener onItemClickedListener;
