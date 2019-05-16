@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.settings.SettingsActivity">
+    tools:context=".components.SettingsActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/settings_toolbar"
@@ -21,7 +21,7 @@
 
     <fragment
         android:id="@+id/auto_hear_settings_fragment"
-        android:name="com.tungnvan.godear.activities.settings.AutoHearSettingsFragment"
+        android:name="com.tungnvan.godear.components.AutoHearSettingsFragment"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"

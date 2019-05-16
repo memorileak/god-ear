@@ -1,4 +1,4 @@
-package com.tungnvan.godear;
+package com.tungnvan.godear.components;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.tungnvan.godear.R;
 import com.tungnvan.godear.utils.FileUtils;
 import com.tungnvan.godear.utils.RecordNameUtils;
 import com.tungnvan.godear.utils.TimeUtils;

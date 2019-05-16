@@ -16,10 +16,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.settings.SettingsActivity"></activity>
+        <activity android:name=".components.SettingsActivity"></activity>
 
         <service
-            android:name=".RecordService"
+            android:name=".components.RecordService"
             android:enabled="true"
             android:exported="true" />
 
@@ -33,7 +33,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ListActivity"
+            android:name=".components.ListActivity"
             android:launchMode="singleTask">
 
             <!-- <intent-filter> -->
@@ -44,7 +44,7 @@
             <!-- </intent-filter> -->
         </activity>
         <activity
-            android:name=".PlayRecordView"
+            android:name=".components.PlayRecordView"
             android:launchMode="singleTask">
 
             <!-- <intent-filter> -->
@@ -55,7 +55,7 @@
             <!-- </intent-filter> -->
         </activity>
 
-        <receiver android:name=".components.CallReceiver">
+        <receiver android:name=".controllers.CallReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.PHONE_STATE" />
             </intent-filter>

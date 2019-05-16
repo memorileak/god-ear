@@ -1,4 +1,4 @@
-package com.tungnvan.godear.components;
+package com.tungnvan.godear.controllers;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.support.v4.content.LocalBroadcastManager;
 
-import com.tungnvan.godear.RecordService;
+import com.tungnvan.godear.components.RecordService;
 import com.tungnvan.godear.commons.PhonecallReceiver;
 
 import java.util.Date;

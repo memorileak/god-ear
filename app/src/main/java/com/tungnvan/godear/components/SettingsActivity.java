@@ -1,4 +1,4 @@
-package com.tungnvan.godear.activities.settings;
+package com.tungnvan.godear.components;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

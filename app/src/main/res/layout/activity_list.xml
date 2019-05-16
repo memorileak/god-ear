@@ -1,60 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-tools:context=".ListActivity">
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".components.ListActivity">
 
-<TextView
-    android:id="@+id/recordText"
-    android:layout_width="293dp"
-    android:layout_height="50dp"
-    android:layout_marginStart="20dp"
-    android:layout_marginTop="36dp"
-    android:layout_marginEnd="50dp"
-    android:text="@string/listText"
-    android:textColor="@color/colorPrimaryDark"
-    android:textSize="25sp"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintHorizontal_bias="0.0"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
-
-<android.support.v7.widget.RecyclerView
-    android:id="@+id/recordList"
-    android:layout_width="395dp"
-    android:layout_height="629dp"
-    android:layout_marginStart="8dp"
-    android:layout_marginTop="8dp"
-    android:layout_marginEnd="8dp"
-    android:layout_marginBottom="8dp"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/recordText" />
-
-    <Button
-        android:id="@+id/multi_delete_button"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="70dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="36dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="23dp"
-        android:background="@drawable/delete_button_border"
-        android:clickable="true"
-        android:elevation="0dp"
-        android:onClick="multiDeleteButtonClicked"
-        android:text="@string/multi_delete_button"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/recordList"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/list_records_toolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:elevation="1dp"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/recordText"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:titleTextColor="@color/colorPrimary" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recordList"
+        android:layout_width="395dp"
+        android:layout_height="629dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/list_records_toolbar" />
 
 </android.support.constraint.ConstraintLayout>

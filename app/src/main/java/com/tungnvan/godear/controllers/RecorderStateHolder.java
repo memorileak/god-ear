@@ -1,4 +1,4 @@
-package com.tungnvan.godear.components;
+package com.tungnvan.godear.controllers;
 
 public class RecorderStateHolder {
 

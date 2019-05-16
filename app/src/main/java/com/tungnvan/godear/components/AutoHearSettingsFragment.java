@@ -1,4 +1,4 @@
-package com.tungnvan.godear.activities.settings;
+package com.tungnvan.godear.components;
 
 import android.os.Bundle;
 import android.support.v7.preference.Preference;
@@ -6,7 +6,7 @@ import android.support.v14.preference.SwitchPreference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 
 import com.tungnvan.godear.R;
-import com.tungnvan.godear.components.SettingsManager;
+import com.tungnvan.godear.controllers.SettingsManager;
 
 public class AutoHearSettingsFragment extends PreferenceFragmentCompat {
 

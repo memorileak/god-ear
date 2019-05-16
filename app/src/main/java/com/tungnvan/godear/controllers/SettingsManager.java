@@ -1,4 +1,4 @@
-package com.tungnvan.godear.components;
+package com.tungnvan.godear.controllers;
 
 import android.content.Context;
 import android.content.SharedPreferences;

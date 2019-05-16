@@ -1,4 +1,4 @@
-package com.tungnvan.godear;
+package com.tungnvan.godear.components;
 
 import android.content.Context;
 import android.support.v7.widget.CardView;
@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.tungnvan.godear.R;
 import com.tungnvan.godear.utils.Record;
 
 import java.util.ArrayList;

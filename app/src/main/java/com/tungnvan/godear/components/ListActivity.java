@@ -1,4 +1,4 @@
-package com.tungnvan.godear;
+package com.tungnvan.godear.components;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
@@ -7,12 +7,10 @@ import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
 
+import com.tungnvan.godear.R;
 import com.tungnvan.godear.utils.Record;
 import com.tungnvan.godear.utils.TimeUtils;
 
@@ -25,18 +23,22 @@ import java.util.List;
 
 public class ListActivity extends AppCompatActivity implements  View.OnClickListener{
     RecyclerView recordView;
-    TextView recordText;
     RecyclerViewAdapter recordAdapter;
-    Button multi_delete_button;
     List<Record> data;
 
     private MediaPlayer mediaPlayer;
+    private Toolbar list_records_toolbar;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
+
+        list_records_toolbar = (Toolbar) findViewById(R.id.list_records_toolbar);
+        setTitle(R.string.listText);
+        setSupportActionBar(list_records_toolbar);
+
         updateList();
     }
 
@@ -48,9 +50,6 @@ public class ListActivity extends AppCompatActivity implements  View.OnClickList
 
     public void updateList(){
         recordView = findViewById(R.id.recordList);
-        recordText = findViewById(R.id.recordText);
-        multi_delete_button = findViewById(R.id.multi_delete_button);
-        multi_delete_button.setEnabled(false);
 
         data = new ArrayList<>();
         int recordCount = 0;
@@ -78,7 +77,7 @@ public class ListActivity extends AppCompatActivity implements  View.OnClickList
             }
         }
 
-        recordText.setText("Record List (" + recordCount +")");
+        setTitle(getResources().getString(R.string.listText) + " (" + recordCount + ")");
         recordAdapter = new RecyclerViewAdapter(data);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
@@ -108,9 +107,9 @@ public class ListActivity extends AppCompatActivity implements  View.OnClickList
 
     @Override
     public void onClick(View v) {
-        if(v == multi_delete_button) {
-            multiDeleteButtonClicked(v);
-        }
+//        if(v == multi_delete_button) {
+//            multiDeleteButtonClicked(v);
+//        }
     }
 
     public void multiDeleteButtonClicked(View view){

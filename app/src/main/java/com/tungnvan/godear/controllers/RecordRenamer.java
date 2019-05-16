@@ -1,4 +1,4 @@
-package com.tungnvan.godear.components;
+package com.tungnvan.godear.controllers;
 
 import android.app.AlertDialog;
 import android.app.Dialog;

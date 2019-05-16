@@ -14,10 +14,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.tungnvan.godear.activities.settings.SettingsActivity;
-import com.tungnvan.godear.components.PermissionController;
-import com.tungnvan.godear.components.RecordRenamer;
-import com.tungnvan.godear.components.RecorderStateHolder;
+import com.tungnvan.godear.components.ListActivity;
+import com.tungnvan.godear.components.RecordService;
+import com.tungnvan.godear.components.SettingsActivity;
+import com.tungnvan.godear.controllers.PermissionController;
+import com.tungnvan.godear.controllers.RecordRenamer;
+import com.tungnvan.godear.controllers.RecorderStateHolder;
 import com.tungnvan.godear.utils.TimeUtils;
 
 public class MainActivity extends AppCompatActivity {

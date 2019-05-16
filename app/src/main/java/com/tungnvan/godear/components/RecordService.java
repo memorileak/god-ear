@@ -1,4 +1,4 @@
-package com.tungnvan.godear;
+package com.tungnvan.godear.components;
 
 import android.app.IntentService;
 import android.app.Notification;
@@ -15,8 +15,10 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.LocalBroadcastManager;
 
-import com.tungnvan.godear.components.RecordTimer;
-import com.tungnvan.godear.components.Recorder;
+import com.tungnvan.godear.MainActivity;
+import com.tungnvan.godear.R;
+import com.tungnvan.godear.controllers.RecordTimer;
+import com.tungnvan.godear.controllers.Recorder;
 import com.tungnvan.godear.constants.GlobalConstants;
 import com.tungnvan.godear.utils.FileUtils;
 import com.tungnvan.godear.utils.TimeUtils;
