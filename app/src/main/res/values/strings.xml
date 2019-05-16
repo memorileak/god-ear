@@ -4,6 +4,8 @@
     <string name="record_button_start">Record</string>
     <string name="record_button_stop">Stop</string>
 
+    <string name="list_records_button_label">List records</string>
+
     <string name="menu_item_list">List Records</string>
     <string name="menu_item_settings">Settings</string>
 

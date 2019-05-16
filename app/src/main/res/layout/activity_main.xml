@@ -53,6 +53,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:titleTextColor="@color/colorPrimary" />
+        app:titleTextColor="@color/colorPrimary">
+
+        <Button
+            android:id="@+id/list_records_button"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="end"
+            android:onClick="handleListRecordsClick"
+            android:text="@string/list_records_button_label"
+            android:textColor="@color/colorPrimary"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="4dp" />
+    </android.support.v7.widget.Toolbar>
 
 </android.support.constraint.ConstraintLayout>
