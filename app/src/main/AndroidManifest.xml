@@ -45,7 +45,8 @@
         </activity>
         <activity
             android:name=".components.PlayRecordView"
-            android:launchMode="singleTask">
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme.PlayRecordView">
 
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->

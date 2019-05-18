@@ -9,4 +9,12 @@
         <item name="android:windowBackground">@color/white</item>
     </style>
 
+    <style name="AppTheme.PlayRecordView">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAllowEnterTransitionOverlap">true</item>
+        <item name="android:windowAllowReturnTransitionOverlap">true</item>
+        <item name="android:windowElevation">8dp</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
+    </style>
+
 </resources>

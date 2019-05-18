@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/PlayRecordView"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="230dp"
     tools:context=".components.PlayRecordView">
+
     <android.support.v7.widget.Toolbar
         android:id="@+id/record_play_toolbar"
         android:layout_width="0dp"
@@ -17,37 +18,24 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:titleTextColor="@color/colorPrimary" >
-
-    <!--<TextView-->
-        <!--android:id="@+id/record_title"-->
-        <!--android:layout_width="293dp"-->
-        <!--android:layout_height="50dp"-->
-        <!--android:text=""-->
-        <!--android:textColor="@color/colorPrimary"-->
-        <!--android:textSize="25sp"-->
-        <!--style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"-->
-
-        <!--app:layout_constraintEnd_toEndOf="parent"-->
-        <!--app:layout_constraintHorizontal_bias="0.104"-->
-        <!--app:layout_constraintStart_toStartOf="parent"-->
-        <!--app:layout_constraintTop_toTopOf="parent"-->
-        <!--app:layout_constraintVertical_bias="0.0" />-->
+        app:titleTextColor="@color/colorPrimary">
     </android.support.v7.widget.Toolbar>
+
 
     <Button
         android:id="@+id/play_pause_button"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="70dp"
         android:layout_height="70dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="20dp"
-        android:layout_marginBottom="60dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/pause_button_shape"
         android:text=""
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/record_seek" />
 
@@ -56,49 +44,46 @@
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="61dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="70dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/ic_fast_rewind_black_24dp"
         android:text=""
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/play_pause_button"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/record_seek"
-        app:layout_constraintVertical_bias="0.458" />
+        app:layout_constraintTop_toBottomOf="@+id/record_seek" />
 
     <Button
         android:id="@+id/next_button"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="61dp"
-        android:layout_marginEnd="100dp"
-        android:layout_marginBottom="70dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/ic_fast_forward_black_24dp"
         android:text=""
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/play_pause_button"
         app:layout_constraintTop_toBottomOf="@+id/record_seek" />
 
     <SeekBar
         android:id="@+id/record_seek"
-        android:layout_width="363dp"
-        android:layout_height="12dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="556dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_width="344dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="104dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="19dp"
+        android:foregroundGravity="center_horizontal"
         app:layout_constraintBottom_toTopOf="@+id/play_pause_button"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.333"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.49" />
 
     <TextView
         android:id="@+id/record_time"
