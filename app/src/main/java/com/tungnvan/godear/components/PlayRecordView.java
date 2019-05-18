@@ -11,12 +11,15 @@ import android.os.Environment;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.support.v7.widget.Toolbar;
 
 import com.tungnvan.godear.R;
 import com.tungnvan.godear.utils.FileUtils;
@@ -33,10 +36,12 @@ public class PlayRecordView extends AppCompatActivity implements View.OnClickLis
     private Button play_pause_button;
     private Button forward_button;
     private Button backward_button;
-    private TextView record_name;
+    //private TextView record_name;
     private SeekBar record_seek;
-    private Button rename_button;
-    private Button delete_button;
+    private Toolbar record_toolbar;
+
+    //private Button rename_button;
+    //private Button delete_button;
     private String recordname;
     private String recordduration;
     private AlertDialog.Builder dialog_builder;
@@ -61,14 +66,19 @@ public class PlayRecordView extends AppCompatActivity implements View.OnClickLis
 
         play_pause_button = findViewById(R.id.play_pause_button);
         play_pause_button.setOnClickListener(this);
-        rename_button = findViewById(R.id.rename_button);
-        rename_button.setOnClickListener(this);
-        delete_button = findViewById(R.id.delete_button);
-        delete_button.setOnClickListener(this);
+        //rename_button = findViewById(R.id.rename_button);
+        //rename_button.setOnClickListener(this);
+        //delete_button = findViewById(R.id.delete_button);
+        //delete_button.setOnClickListener(this);
         forward_button = findViewById(R.id.next_button);
         forward_button.setOnClickListener(this);
         backward_button = findViewById(R.id.back_button);
         backward_button.setOnClickListener(this);
+
+        record_toolbar = findViewById(R.id.record_play_toolbar);
+        setSupportActionBar(record_toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        //record_toolbar.setTitle(recordname);
 
         record_seek = findViewById(R.id.record_seek);
         record_seek.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -91,7 +101,7 @@ public class PlayRecordView extends AppCompatActivity implements View.OnClickLis
         });
         record_time = findViewById(R.id.record_time);
         record_duration = findViewById(R.id.record_duration);
-        record_name = findViewById(R.id.record_title);
+        //record_name = findViewById(R.id.record_title);
 
         mediaPlayer = new MediaPlayer();
         Intent intent = getIntent();
@@ -100,6 +110,26 @@ public class PlayRecordView extends AppCompatActivity implements View.OnClickLis
         playRecord(position);
 
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.record_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.rename:
+                renameButtonClicked();
+                return true;
+            case R.id.delete:
+                deleteButtonClicked();
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
 
     public void playRecord(int position) {
         File dir_folder = new File(dir_path);
@@ -119,7 +149,8 @@ public class PlayRecordView extends AppCompatActivity implements View.OnClickLis
             }
 
             recordname = record.getName();
-            record_name.setText(recordname);
+            //record_name.setText(recordname);
+            record_toolbar.setTitle(recordname);
 
             try {
                 this.mediaPlayer.setDataSource(dir_path + recordname);
@@ -189,7 +220,7 @@ public class PlayRecordView extends AppCompatActivity implements View.OnClickLis
         imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
     }
 
-    public void renameButtonClicked(View view) {
+    public void renameButtonClicked() {
         View record_rename_form;
         final EditText record_name_input;
         dialog_builder = new AlertDialog.Builder(this);
@@ -215,7 +246,8 @@ public class PlayRecordView extends AppCompatActivity implements View.OnClickLis
                             dialog.dismiss();
                             hideKeyboard();
                             recordname = record_name_input.getText().toString();
-                            record_name.setText(recordname);
+                            //record_name.setText(recordname);
+                            record_toolbar.setTitle(recordname);
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -232,7 +264,7 @@ public class PlayRecordView extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-    public void deleteButtonClicked(View view) {
+    public void deleteButtonClicked() {
         AlertDialog.Builder delete_dialog = new AlertDialog.Builder(this);
         delete_dialog.setMessage("Do you want to delete this record?");
         delete_dialog.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
@@ -262,12 +294,12 @@ public class PlayRecordView extends AppCompatActivity implements View.OnClickLis
         if (v == play_pause_button) {
             playPauseButtonClicked(v);
         }
-        if (v == rename_button) {
-            renameButtonClicked(v);
-        }
-        if (v == delete_button) {
-            deleteButtonClicked(v);
-        }
+//        if (v == rename_button) {
+//            renameButtonClicked(v);
+//        }
+//        if (v == delete_button) {
+//            deleteButtonClicked(v);
+//        }
         if (v == forward_button) {
             forwardButtonClicked(v);
         }

@@ -15,7 +15,9 @@
     <string name="record_list">Record List</string>
     <string name="record_title">Record Title</string>
     <string name="listText">Record List</string>
-
+    <string name="record_rename_item">Rename</string>
+    <string name="record_delete_item">Delete</string>
+    <string name="record_share_item">Share</string>
     <string name="settings_activity_title">Settings</string>
     <string name="auto_hear_incoming_call_key">auto_hear_incoming_call_preference</string>
     <string name="auto_hear_incoming_call_option">Auto hear incoming call</string>
