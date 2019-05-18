@@ -18,7 +18,7 @@ import com.tungnvan.godear.components.RecordListActivity;
 import com.tungnvan.godear.components.RecordService;
 import com.tungnvan.godear.components.SettingsActivity;
 import com.tungnvan.godear.controllers.PermissionController;
-import com.tungnvan.godear.controllers.RecordRenamer;
+import com.tungnvan.godear.components.RecordRenamer;
 import com.tungnvan.godear.controllers.RecorderStateHolder;
 import com.tungnvan.godear.utils.TimeUtils;
 

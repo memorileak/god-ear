@@ -39,10 +39,10 @@ public class RecordListAdapter extends RecyclerView.Adapter<RecordListAdapter.Vi
 
     @NonNull
     @Override
-    public RecordListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        Context context = viewGroup.getContext();
+    public RecordListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
+        Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-        View list_record_view = inflater.inflate(R.layout.record, viewGroup, false);
+        View list_record_view = inflater.inflate(R.layout.record, parent, false);
         return new ViewHolder(list_record_view);
     }
 
@@ -56,6 +56,7 @@ public class RecordListAdapter extends RecyclerView.Adapter<RecordListAdapter.Vi
             @Override
             public void onClick(View v) {
                 Log.v("THIS", record.getAbsolutePath());
+                (new RecordPlayer(v.getContext(), record.getAbsolutePath())).showDialog();
             }
         });
     }
