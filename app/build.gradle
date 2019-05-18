@@ -30,5 +30,5 @@ dependencies {
     implementation 'com.android.support:cardview-v7:28.0.0'
 
     implementation 'com.android.support:preference-v7:28.0.0'
-
+    implementation 'com.lucasurbas:listitemview:1.1.1'
 }

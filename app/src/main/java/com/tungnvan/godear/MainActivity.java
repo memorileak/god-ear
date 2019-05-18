@@ -14,7 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.tungnvan.godear.components.ListActivity;
+import com.tungnvan.godear.components.RecordListActivity;
 import com.tungnvan.godear.components.RecordService;
 import com.tungnvan.godear.components.SettingsActivity;
 import com.tungnvan.godear.controllers.PermissionController;
@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void handleListRecordsClick(View view) {
-        startActivity (new Intent(this, ListActivity.class));
+        startActivity (new Intent(this, RecordListActivity.class));
     }
 
 }

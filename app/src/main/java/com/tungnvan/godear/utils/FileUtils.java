@@ -2,6 +2,7 @@ package com.tungnvan.godear.utils;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
@@ -55,6 +56,30 @@ public class FileUtils {
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }
+    }
+
+    public static ArrayList<File> listAllFilesNonrecursively(String dir_path, String pattern) {
+        ArrayList<File> result = new ArrayList<>();
+        File folder = new File(dir_path);
+        if (folder.isDirectory()) {
+            try {
+                for (final File f : folder.listFiles()) {
+                    if (f.isFile()) {
+                        if (f.getName().matches(pattern)) {
+                            result.add(f);
+                        }
+                    }
+
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return result;
+    }
+
+    public static ArrayList<File> listAllRecordFilesNonrecursively(String dir_path) {
+        return listAllFilesNonrecursively(dir_path, ".*\\.m4a");
     }
 
 }
