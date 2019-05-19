@@ -1,11 +1,11 @@
 package com.tungnvan.godear.controllers;
 
-import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.AsyncTask;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -29,8 +29,7 @@ public class Player {
 
     }
 
-    private Context own_context;
-    private Uri file_uri;
+    private File file_to_play;
     private MediaPlayer media_player;
     private Timer player_state_timer;
     private Timer player_position_timer;
@@ -38,9 +37,8 @@ public class Player {
     private HashMap<String, Runnable> state_observers = new HashMap<>();
     private HashMap<String, Runnable> position_observers = new HashMap<>();
 
-    public Player(Context context, String file_path) {
-        file_uri = Uri.parse(file_path);
-        own_context = context;
+    public Player(String file_path) {
+        file_to_play = new File(file_path);
     }
 
     private void broadcastState() {
@@ -85,7 +83,7 @@ public class Player {
             }
         });
         try {
-            media_player.setDataSource(own_context, file_uri);
+            media_player.setDataSource((new FileInputStream(file_to_play)).getFD());
             media_player.prepare();
             broadcast();
         } catch (Exception e) {

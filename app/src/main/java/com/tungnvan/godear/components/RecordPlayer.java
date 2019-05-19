@@ -31,14 +31,9 @@ public class RecordPlayer {
 
     public RecordPlayer(Context context, String file_path) {
         own_context = context;
-        preparePlayer(context, file_path);
-        record_player_body = LayoutInflater.from(own_context).inflate(R.layout.record_player_body, null);
-        record_player_control_button = (Button) record_player_body.findViewById(R.id.record_player_control_button);
-        record_player_record_name = (TextView) record_player_body.findViewById(R.id.record_player_record_name);
-        record_player_seekbar = (SeekBar) record_player_body.findViewById(R.id.record_player_seekbar);
-        current_time = (TextView) record_player_body.findViewById(R.id.record_player_current_time);
-        end_time = (TextView) record_player_body.findViewById(R.id.record_player_end_time);
-        setInitialValues(context, file_path);
+        preparePlayer(file_path);
+        inflateDialogBody();
+        setInitialValues(file_path);
         dialog_builder = new AlertDialog.Builder(own_context);
         dialog = dialog_builder
                 .setView(record_player_body)
@@ -46,8 +41,8 @@ public class RecordPlayer {
         dialog.setCanceledOnTouchOutside(false);
     }
 
-    private void preparePlayer(Context context, String file_path) {
-        player = new Player(context, file_path);
+    private void preparePlayer(String file_path) {
+        player = new Player(file_path);
         player.subscribeState(RecordPlayer.CLASS_NAME, new Runnable() {
             @Override
             public void run() {
@@ -69,8 +64,17 @@ public class RecordPlayer {
         player.prepare();
     }
 
-    private void setInitialValues(Context context, String file_path) {
-        record_player_control_button.setBackground(context.getResources().getDrawable(R.drawable.player_pause_button));
+    private void inflateDialogBody() {
+        record_player_body = LayoutInflater.from(own_context).inflate(R.layout.record_player_body, null);
+        record_player_control_button = (Button) record_player_body.findViewById(R.id.record_player_control_button);
+        record_player_record_name = (TextView) record_player_body.findViewById(R.id.record_player_record_name);
+        record_player_seekbar = (SeekBar) record_player_body.findViewById(R.id.record_player_seekbar);
+        current_time = (TextView) record_player_body.findViewById(R.id.record_player_current_time);
+        end_time = (TextView) record_player_body.findViewById(R.id.record_player_end_time);
+    }
+
+    private void setInitialValues(String file_path) {
+        record_player_control_button.setBackground(own_context.getResources().getDrawable(R.drawable.player_pause_button));
         record_player_control_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

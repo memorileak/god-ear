@@ -3,7 +3,6 @@ package com.tungnvan.godear.components;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,7 +54,6 @@ public class RecordListAdapter extends RecyclerView.Adapter<RecordListAdapter.Vi
         record_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.v("THIS", record.getAbsolutePath());
                 (new RecordPlayer(v.getContext(), record.getAbsolutePath())).showDialog();
             }
         });
