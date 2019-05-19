@@ -75,6 +75,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.list_records:
+                startListRecordsActivity();
+                return true;
             case R.id.settings:
                 startSettingsActivity();
                 return true;
@@ -89,6 +92,10 @@ public class MainActivity extends AppCompatActivity {
         } else {
             record_button.setBackground(getResources().getDrawable(R.drawable.record_button_shape));
         }
+    }
+
+    private void startListRecordsActivity() {
+        startActivity (new Intent(this, RecordListActivity.class));
     }
 
     private void startSettingsActivity() {
@@ -106,10 +113,6 @@ public class MainActivity extends AppCompatActivity {
         } else {
             permission_controller.grantPermission();
         }
-    }
-
-    public void handleListRecordsClick(View view) {
-        startActivity (new Intent(this, RecordListActivity.class));
     }
 
 }

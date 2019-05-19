@@ -1,12 +1,12 @@
 <resources>
     <string name="app_name">God Ear</string>
 
+    <string name="record_timer_default">00:00:00</string>
     <string name="record_button_start">Record</string>
     <string name="record_button_stop">Stop</string>
 
-    <string name="list_records_button_label">List records</string>
-
     <string name="menu_item_settings">Settings</string>
+    <string name="menu_item_list_records">List Records</string>
 
     <string name="rename_record_dialog_title">Rename record</string>
     <string name="rename_record_dialog_positive_button">Save</string>

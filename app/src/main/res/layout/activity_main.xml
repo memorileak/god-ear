@@ -23,7 +23,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/record_timer" />
+        app:layout_constraintTop_toBottomOf="@+id/record_timer"
+        android:focusable="true" />
 
     <TextView
         android:id="@+id/record_timer"
@@ -33,7 +34,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:text="TextView"
+        android:text="@string/record_timer_default"
         android:textColor="@color/text_normal"
         android:textSize="60sp"
         app:layout_constraintBottom_toTopOf="@+id/record_button"
@@ -53,20 +54,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:titleTextColor="@color/colorPrimary">
-
-        <Button
-            android:id="@+id/list_records_button"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_gravity="end"
-            android:onClick="handleListRecordsClick"
-            android:text="@string/list_records_button_label"
-            android:textColor="@color/colorPrimary"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="4dp" />
-    </android.support.v7.widget.Toolbar>
+        app:titleTextColor="@color/colorPrimary"/>
 
 </android.support.constraint.ConstraintLayout>
