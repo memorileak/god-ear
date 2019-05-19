@@ -16,5 +16,6 @@
         app:liv_iconColor="@color/white"
         app:liv_displayMode="circularIcon"
         app:liv_circularIconColor="@color/colorPrimary"
+        app:liv_menu="@menu/record_item_menu"
         app:liv_multiline="false" />
 </LinearLayout>

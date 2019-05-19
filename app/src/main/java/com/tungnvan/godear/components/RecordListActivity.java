@@ -21,6 +21,20 @@ public class RecordListActivity extends AppCompatActivity {
     private RecyclerView record_list;
     private RecordListAdapter record_list_adapter;
 
+    private void drawListRecord() {
+        record_files = FileUtils.listAllRecordFilesNonrecursively(GlobalConstants.RECORD_DIRECTORY);
+        record_list = (RecyclerView) findViewById(R.id.record_list);
+        record_list_adapter = new RecordListAdapter(record_files);
+        record_list_adapter.setOnUpdateList(new Runnable() {
+            @Override
+            public void run() {
+                drawListRecord();
+            }
+        });
+        record_list.setAdapter(record_list_adapter);
+        record_list.setLayoutManager(new LinearLayoutManager(this));
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,10 +44,6 @@ public class RecordListActivity extends AppCompatActivity {
         setSupportActionBar(list_records_toolbar);
         setTitle(R.string.listText);
 
-        record_files = FileUtils.listAllRecordFilesNonrecursively(GlobalConstants.RECORD_DIRECTORY);
-        record_list = (RecyclerView) findViewById(R.id.record_list);
-        record_list_adapter = new RecordListAdapter(record_files);
-        record_list.setAdapter(record_list_adapter);
-        record_list.setLayoutManager(new LinearLayoutManager(this));
+        drawListRecord();
     }
 }
