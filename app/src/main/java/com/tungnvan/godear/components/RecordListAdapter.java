@@ -12,7 +12,6 @@ import android.widget.Toast;
 
 import com.lucasurbas.listitemview.ListItemView;
 import com.tungnvan.godear.R;
-import com.tungnvan.godear.commons.ConfirmDialog;
 import com.tungnvan.godear.utils.FileUtils;
 import com.tungnvan.godear.utils.TimeUtils;
 
@@ -43,7 +42,16 @@ public class RecordListAdapter extends RecyclerView.Adapter<RecordListAdapter.Vi
         list_records = record_list;
     }
 
-    private void handleRenameRecord() {}
+    private void handleRenameRecord(final Context context, final String file_path) {
+        new RecordRenamerWithoutDiscard(context, file_path)
+            .setOnRenamed(new Runnable() {
+                @Override
+                public void run() {
+                    if (on_update != null) on_update.run();
+                }
+            })
+            .showDialog();
+    }
 
     private void handleDeleteRecord(final Context context, final String file_path) {
         new ConfirmDialog(context, "Delete this file?")
@@ -96,7 +104,7 @@ public class RecordListAdapter extends RecyclerView.Adapter<RecordListAdapter.Vi
             public void onActionMenuItemSelected(final MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.record_rename_item:
-                        handleRenameRecord();
+                        handleRenameRecord(record_view.getContext(), record.getAbsolutePath());
                         break;
                     case R.id.record_delete_item:
                         handleDeleteRecord(record_view.getContext(), record.getAbsolutePath());

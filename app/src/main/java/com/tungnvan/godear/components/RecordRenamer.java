@@ -15,14 +15,14 @@ import com.tungnvan.godear.utils.RecordNameUtils;
 
 public class RecordRenamer {
 
-    private Context own_context;
-    private AlertDialog.Builder dialog_builder;
-    private AlertDialog dialog;
-    private View record_rename_form;
-    private EditText record_name_input;
-    private String old_file_path;
+    protected EditText record_name_input;
+    protected String old_file_path;
+    protected View record_rename_form;
+    protected Context own_context;
+    protected AlertDialog.Builder dialog_builder;
+    protected AlertDialog dialog;
 
-    private boolean renameRecord() {
+    protected boolean renameRecord() {
         try {
             String new_file_path = RecordNameUtils.produceFilePathFromName(record_name_input.getText().toString());
             if (
@@ -42,7 +42,7 @@ public class RecordRenamer {
         }
     }
 
-    private boolean deleteRecord() {
+    protected boolean deleteRecord() {
         try {
             if (FileUtils.deleteFile(old_file_path)) {
                 Toast.makeText(own_context, "Record file has been discarded!", Toast.LENGTH_SHORT).show();
@@ -58,12 +58,12 @@ public class RecordRenamer {
         }
     }
 
-    private void showKeyboard() {
+    protected void showKeyboard() {
         InputMethodManager imm = (InputMethodManager)own_context.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
     }
 
-    private void hideKeyboard() {
+    protected void hideKeyboard() {
         InputMethodManager imm = (InputMethodManager)own_context.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
     }

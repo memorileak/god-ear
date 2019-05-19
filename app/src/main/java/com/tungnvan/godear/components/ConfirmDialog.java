@@ -1,4 +1,4 @@
-package com.tungnvan.godear.commons;
+package com.tungnvan.godear.components;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -40,14 +40,14 @@ public class ConfirmDialog {
             dialog.getButton(Dialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    on_granted.run();
+                    if (on_granted != null) on_granted.run();
                     dialog.dismiss();
                 }
             });
             dialog.getButton(Dialog.BUTTON_NEGATIVE).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    on_denied.run();
+                    if (on_denied != null) on_denied.run();
                     dialog.dismiss();
                 }
             });
