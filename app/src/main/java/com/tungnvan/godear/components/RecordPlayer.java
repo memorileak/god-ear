@@ -38,7 +38,7 @@ public class RecordPlayer {
         dialog = dialog_builder
                 .setView(record_player_body)
                 .create();
-        dialog.setCanceledOnTouchOutside(false);
+        dialog.setCanceledOnTouchOutside(true);
     }
 
     private void preparePlayer(String file_path) {
