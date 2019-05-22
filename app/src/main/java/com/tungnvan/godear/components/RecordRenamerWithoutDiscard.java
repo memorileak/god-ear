@@ -30,15 +30,17 @@ public class RecordRenamerWithoutDiscard extends RecordRenamer {
     protected boolean renameRecord() {
         try {
             String new_file_path = RecordNameUtils.produceFilePathFromName(record_name_input.getText().toString());
-            if (
-                old_file_path.compareTo(new_file_path) == 0
-                || FileUtils.renameFile(old_file_path, new_file_path)
-            ) {
-                Toast.makeText(own_context, "Record file has successfully renamed!", Toast.LENGTH_SHORT).show();
-                return true;
-            } else {
-                Toast.makeText(own_context, "An error occured!", Toast.LENGTH_SHORT).show();
+            if (RecordNameUtils.produceFileNameFromPath(new_file_path).compareTo("") == 0) {
+                Toast.makeText(own_context, "Please enter a name!", Toast.LENGTH_SHORT).show();
                 return false;
+            } else {
+                if (old_file_path.compareTo(new_file_path) == 0 || FileUtils.renameFile(old_file_path, new_file_path)) {
+                    Toast.makeText(own_context, "Record file has successfully renamed!", Toast.LENGTH_SHORT).show();
+                    return true;
+                } else {
+                    Toast.makeText(own_context, "An error occured!", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
