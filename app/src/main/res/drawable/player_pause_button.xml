@@ -3,8 +3,8 @@
     <item>
         <shape android:shape="oval">
             <solid android:color="@color/colorPrimary" />
-            <size android:width="24dp" android:height="24dp" />
+            <size android:width="48dp" android:height="48dp" />
         </shape>
     </item>
-    <item android:gravity="center" android:drawable="@drawable/pause_button_shape" />
+    <item android:gravity="center" android:drawable="@drawable/ic_pause_black_32dp" />
 </layer-list>

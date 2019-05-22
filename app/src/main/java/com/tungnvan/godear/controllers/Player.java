@@ -41,6 +41,11 @@ public class Player {
         file_to_play = new File(file_path);
     }
 
+    private int getUpdatePositionIntervalFromDuration(int duration) {
+        int interval = duration / 600;
+        return interval < 30 ? 30 : interval;
+    }
+
     private void broadcastState() {
         (new Player.BroadcastTask()).execute(state_observers.values().toArray(new Runnable[0]));
     }
@@ -79,7 +84,8 @@ public class Player {
         media_player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
-                on_completion.run();
+                pause();
+               if (on_completion != null) on_completion.run();
             }
         });
         try {
@@ -100,14 +106,14 @@ public class Player {
                 public void run() {
                     broadcastState();
                 }
-            }, 0, 100);
+            }, 0, 200);
             player_position_timer = new Timer();
             player_position_timer.scheduleAtFixedRate(new TimerTask() {
                 @Override
                 public void run() {
                     broadcastPosition();
                 }
-            }, 25, 50);
+            }, 25, getUpdatePositionIntervalFromDuration(getDuration()));
             broadcast();
         } catch (Exception e) {
             e.printStackTrace();

@@ -23,6 +23,8 @@ public class RecordPlayer {
     private AlertDialog dialog;
     private View record_player_body;
     private Button record_player_control_button;
+    private Button record_player_forward_button;
+    private Button record_player_rewind_button;
     private TextView record_player_record_name;
     private SeekBar record_player_seekbar;
     private TextView current_time;
@@ -55,18 +57,14 @@ public class RecordPlayer {
                 updateSeekbarByPlayerPosition();
             }
         });
-        player.setOnCompletion(new Runnable() {
-            @Override
-            public void run() {
-                dialog.dismiss();
-            }
-        });
         player.prepare();
     }
 
     private void inflateDialogBody() {
         record_player_body = LayoutInflater.from(own_context).inflate(R.layout.record_player_body, null);
         record_player_control_button = (Button) record_player_body.findViewById(R.id.record_player_control_button);
+        record_player_forward_button = (Button) record_player_body.findViewById(R.id.record_player_forward_button);
+        record_player_rewind_button = (Button) record_player_body.findViewById(R.id.record_player_rewind_button);
         record_player_record_name = (TextView) record_player_body.findViewById(R.id.record_player_record_name);
         record_player_seekbar = (SeekBar) record_player_body.findViewById(R.id.record_player_seekbar);
         current_time = (TextView) record_player_body.findViewById(R.id.record_player_current_time);
@@ -79,6 +77,18 @@ public class RecordPlayer {
             @Override
             public void onClick(View v) {
                 handleControlButtonClick();
+            }
+        });
+        record_player_forward_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                handleForwardClick();
+            }
+        });
+        record_player_rewind_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                handleRewindClick();
             }
         });
         record_player_record_name.setText(RecordNameUtils.produceFileNameFromPath(file_path));
@@ -124,6 +134,18 @@ public class RecordPlayer {
         } else {
             player.start();
         }
+    }
+
+    private void handleForwardClick() {
+        int to_time = player.getCurrentPosition() + 5000;
+        to_time = to_time > player.getDuration() ? player.getDuration() : to_time;
+        player.seekTo(to_time);
+    }
+
+    private void handleRewindClick() {
+        int to_time = player.getCurrentPosition() - 5000;
+        to_time = to_time < 0 ? 0 : to_time;
+        player.seekTo(to_time);
     }
 
     public void showDialog() {
