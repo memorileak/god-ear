@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/record_rename_item"
+        android:title="@string/record_menu_item_rename" />
+    <item
+        android:id="@+id/record_delete_item"
+        android:title="@string/record_menu_item_delete" />
+</menu>

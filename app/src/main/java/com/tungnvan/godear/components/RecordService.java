@@ -1,19 +1,26 @@
-package com.tungnvan.godear;
+package com.tungnvan.godear.components;
 
 import android.app.IntentService;
 import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.LocalBroadcastManager;
 
-import com.tungnvan.godear.components.RecordTimer;
-import com.tungnvan.godear.components.Recorder;
+import com.tungnvan.godear.MainActivity;
+import com.tungnvan.godear.R;
+import com.tungnvan.godear.controllers.RecordTimer;
+import com.tungnvan.godear.controllers.Recorder;
+import com.tungnvan.godear.constants.GlobalConstants;
+import com.tungnvan.godear.utils.FileUtils;
 import com.tungnvan.godear.utils.TimeUtils;
 
 public class RecordService extends IntentService {
@@ -22,9 +29,14 @@ public class RecordService extends IntentService {
     public static final String BROADCAST_RECORDER = "BROADCAST_RECORDER";
     public static final String BROADCAST_CLOCK = "BROADCAST_CLOCK";
     public static final String IS_RECORDING = "IS_RECORDING";
+    public static final String FILE_PATH = "FILE_PATH";
     public static final String ELAPSED_TIME = "ELAPSED_TIME";
+    public static final String RECORD_TYPE = "RECORD_TYPE";
+    public static final String CALL_NUMBER = "CALL_NUMBER";
+    public static final String[] RECORD_TYPES = new String[] {"SOUND", "INCOMING_CALL", "OUTGOING_CALL"};
 
-    private String CHANNEL_ID = "9001";
+    private String NOTIFICATION_CHANNEL_ID = "com.tungnvan.godear";
+    private String NOTIFICATION_CHANNEL_NAME = "Record Service";
     private int NOTIFICATION_ID = 9009;
     private NotificationCompat.Builder notification_builder;
     private PendingIntent pending_main_activity_intent;
@@ -42,7 +54,7 @@ public class RecordService extends IntentService {
                 .getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)
             : pending_main_activity_intent;
         notification_builder = notification_builder == null
-            ? new NotificationCompat.Builder(this, CHANNEL_ID)
+            ? new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_god_ear)
                 .setContentTitle("God Ear is listening")
                 .setPriority(Notification.PRIORITY_DEFAULT)
@@ -56,12 +68,21 @@ public class RecordService extends IntentService {
     }
 
     private void startForegroundWithNotification(Notification notification) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            // Create your own notification channel if android version is 8.0 and up
+            NotificationChannel notification_channel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, NOTIFICATION_CHANNEL_NAME, NotificationManager.IMPORTANCE_LOW);
+            notification_channel.enableLights(false);
+            notification_channel.enableVibration(false);
+            NotificationManager notification_manager = (NotificationManager) getSystemService(NotificationManager.class);
+            notification_manager.createNotificationChannel(notification_channel);
+        }
         startForeground(NOTIFICATION_ID, notification);
     }
 
     private void broadcastRecorder() {
         Intent broadcast_intent = new Intent(RecordService.BROADCAST_RECORDER);
         broadcast_intent.putExtra(RecordService.IS_RECORDING, recorder.isRecording());
+        broadcast_intent.putExtra(RecordService.FILE_PATH, recorder.getFilePath());
         LocalBroadcastManager.getInstance(this).sendBroadcast(broadcast_intent);
     }
 
@@ -73,8 +94,8 @@ public class RecordService extends IntentService {
 
     @Override
     public void onCreate() {
-        recorder = new Recorder();
-        clock = new RecordTimer();
+        recorder = Recorder.getInstance();
+        clock = RecordTimer.getInstance();
         recorder.subscribe(RecordService.CLASS_NAME, new Runnable() {
             @Override
             public void run() {
@@ -105,7 +126,12 @@ public class RecordService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         try {
-            recorder.setupRecorder();
+            String file_name = (intent.getStringExtra(RecordService.RECORD_TYPE).compareTo(RecordService.RECORD_TYPES[0]) == 0)
+                ? FileUtils.generateFileNameByTime(GlobalConstants.SOUND_RECORD_PREFIX)
+                : (intent.getStringExtra(RecordService.RECORD_TYPE).compareTo(RecordService.RECORD_TYPES[1]) == 0)
+                    ? FileUtils.generateFileNameByTime(GlobalConstants.INCOMING_CALL_RECORD_PREFIX + intent.getStringExtra(RecordService.CALL_NUMBER) + " ")
+                    : FileUtils.generateFileNameByTime(GlobalConstants.OUTGOING_CALL_RECORD_PREFIX + intent.getStringExtra(RecordService.CALL_NUMBER) + " ");
+            recorder.setupRecorder(file_name);
             recorder.startRecorder();
             clock.startTimer();
             while (true) ;

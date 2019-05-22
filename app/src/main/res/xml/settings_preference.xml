@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="@string/auto_hear_incoming_call_key"
+        android:summary="@string/auto_hear_incoming_call_summary"
+        android:title="@string/auto_hear_incoming_call_option"
+        app:iconSpaceReserved="false" />
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="@string/auto_hear_outgoing_call_key"
+        android:summary="@string/auto_hear_outgoing_call_summary"
+        android:title="@string/auto_hear_outgoing_call_option"
+        app:iconSpaceReserved="false" />
+</PreferenceScreen>

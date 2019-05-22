@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/record_line_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:orientation="horizontal"
+    android:focusable="true">
+    <com.lucasurbas.listitemview.ListItemView
+        android:id="@+id/record_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:liv_icon="@drawable/play_record_list_icon"
+        app:liv_iconColor="@color/white"
+        app:liv_displayMode="circularIcon"
+        app:liv_circularIconColor="@color/colorPrimary"
+        app:liv_menu="@menu/record_item_menu"
+        app:liv_multiline="false" />
+</LinearLayout>

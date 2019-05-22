@@ -1,4 +1,4 @@
-package com.tungnvan.godear.components;
+package com.tungnvan.godear.controllers;
 
 import android.app.Activity;
 
@@ -8,6 +8,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class RecordTimer extends Activity {
+
+    private static RecordTimer instance = null;
 
     private int elapsed_time = 0;
     private Timer elapsed_counter;
@@ -19,6 +21,13 @@ public class RecordTimer extends Activity {
             tickTimer();
         }
     }
+
+    public static RecordTimer getInstance() {
+        if (instance == null) instance = new RecordTimer();
+        return instance;
+    }
+
+    private RecordTimer() {}
 
     private void tickTimer() {
         ++elapsed_time;
