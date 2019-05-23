@@ -14,11 +14,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.tungnvan.godear.components.ListActivity;
+import com.tungnvan.godear.components.RecordListActivity;
 import com.tungnvan.godear.components.RecordService;
 import com.tungnvan.godear.components.SettingsActivity;
 import com.tungnvan.godear.controllers.PermissionController;
-import com.tungnvan.godear.controllers.RecordRenamer;
+import com.tungnvan.godear.components.RecordRenamer;
 import com.tungnvan.godear.controllers.RecorderStateHolder;
 import com.tungnvan.godear.utils.TimeUtils;
 
@@ -75,6 +75,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.list_records:
+                startListRecordsActivity();
+                return true;
             case R.id.settings:
                 startSettingsActivity();
                 return true;
@@ -89,6 +92,10 @@ public class MainActivity extends AppCompatActivity {
         } else {
             record_button.setBackground(getResources().getDrawable(R.drawable.record_button_shape));
         }
+    }
+
+    private void startListRecordsActivity() {
+        startActivity (new Intent(this, RecordListActivity.class));
     }
 
     private void startSettingsActivity() {
@@ -106,10 +113,6 @@ public class MainActivity extends AppCompatActivity {
         } else {
             permission_controller.grantPermission();
         }
-    }
-
-    public void handleListRecordsClick(View view) {
-        startActivity (new Intent(this, ListActivity.class));
     }
 
 }

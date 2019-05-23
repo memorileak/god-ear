@@ -129,8 +129,8 @@ public class RecordService extends IntentService {
             String file_name = (intent.getStringExtra(RecordService.RECORD_TYPE).compareTo(RecordService.RECORD_TYPES[0]) == 0)
                 ? FileUtils.generateFileNameByTime(GlobalConstants.SOUND_RECORD_PREFIX)
                 : (intent.getStringExtra(RecordService.RECORD_TYPE).compareTo(RecordService.RECORD_TYPES[1]) == 0)
-                    ? FileUtils.generateFileNameByTime(GlobalConstants.INCOMING_CALL_RECORD_PREFIX + intent.getStringExtra(RecordService.CALL_NUMBER) + "_")
-                    : FileUtils.generateFileNameByTime(GlobalConstants.OUTGOING_CALL_RECORD_PREFIX + intent.getStringExtra(RecordService.CALL_NUMBER) + "_");
+                    ? FileUtils.generateFileNameByTime(GlobalConstants.INCOMING_CALL_RECORD_PREFIX + intent.getStringExtra(RecordService.CALL_NUMBER) + " ")
+                    : FileUtils.generateFileNameByTime(GlobalConstants.OUTGOING_CALL_RECORD_PREFIX + intent.getStringExtra(RecordService.CALL_NUMBER) + " ");
             recorder.setupRecorder(file_name);
             recorder.startRecorder();
             clock.startTimer();

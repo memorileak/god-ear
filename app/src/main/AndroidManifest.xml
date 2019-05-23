@@ -33,7 +33,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".components.ListActivity"
+            android:name=".components.RecordListActivity"
             android:launchMode="singleTask">
 
             <!-- <intent-filter> -->
